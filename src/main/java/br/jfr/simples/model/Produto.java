@@ -17,7 +17,7 @@ import java.util.Calendar;
  */
 @Entity
 @Table(name="nw_produto")
-public class Produto { //extends PersistentEntity  {
+public class Produto extends PersistentEntity  {
 	
 	private static final long serialVersionUID = 1L;
 
