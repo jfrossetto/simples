@@ -84,6 +84,27 @@
               <artifactId>omnifaces</artifactId>
               <version>2.6.8</version>
           </dependency>
+          
+          <!-- caelum stella -->
+        <dependency>
+            <groupId>br.com.caelum.stella</groupId>
+            <artifactId>caelum-stella-core</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+        <!-- logger -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
+          	<scope>provided</scope>
+        </dependency>
+          <!-- retrofit --> 
+        <dependency>
+            <groupId>com.squareup.retrofit</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>1.9.0</version>
+        </dependency>
   
     <dependency>
       <groupId>junit</groupId>

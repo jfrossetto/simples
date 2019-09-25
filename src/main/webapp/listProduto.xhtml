@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+    <ui:param name="activeMenu" value="Produtos"/>
+ 
+    <f:metadata>
+        <f:viewAction action="#{produtoBean.initializeListing() }"/>
+    </f:metadata>
+	
+	<ui:define name="titulo">
+			Produto
+	</ui:define>
+	
+	<ui:define name="descricaoPagina">
+			Consulta
+	</ui:define>
+
+    <ui:define name="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Produto</a></li>
+    </ui:define>
+
+	<ui:define name="conteudo">
+
+		<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <p:messages id="messages" closable="true" />
+            </div>
+        </div>
+	
+		<div class="box">
+		
+		    <div class="box-header with-border">
+				<h:form id="formSearchProduto" prependId="false">
+		    		<p:defaultCommand target="btBusca"/>
+                    <div class="row">
+      	            	<div class="col-md-8">
+		            		<p:calendar id="dataini" 
+               		 				value="#{produtoBean.dataini}"
+                    	        	mask="true"
+                        		    pattern="dd/MM/yyyy"
+									converter="dateCalendarConverter">
+							</p:calendar>
+							<p:spacer width="10"/>		            	
+							<p:outputLabel value=" ... "/>
+							<p:spacer width="10"/>	
+		            		<p:calendar id="datafim" 
+               		 				value="#{produtoBean.datafim}"
+                    	        	mask="true"
+                        		    pattern="dd/MM/yyyy"
+									converter="dateCalendarConverter">
+							</p:calendar>
+							<p:spacer width="10"/>
+							<p:inputText  id="id_ped" 
+								              value="#{produtoBean.codigo}" 
+								              placeholder="id produto, cod oracle" >
+							</p:inputText>
+							<p:spacer width="10"/>
+							<p:inputText  id="descricao" 
+								              value="#{produtoBean.filtro}" 
+								              placeholder="descricao , categoria" >
+							</p:inputText>
+							<p:spacer width="10"/>
+			    			<p:commandButton id="btBusca"
+	    					                 icon="fa fa-search"
+	    					                 value="Busca" 
+	    			    		             action="#{produtoBean.doSearch()}" 
+	    			            		     update="tblProdutos"
+											 styleClass="btn btn-flat btn-info" />
+						</div>
+						<div class="col-md-4">
+							<div class="box-tools pull-right">
+                        	<p:commandButton immediate="true"
+                            	             value="Novo"
+                                	         action="#{produtoBean.changeToAdd()}"
+                                    	     styleClass="btn btn-flat btn-info"
+                                    	     rendered="#{usuarioLogado.hasRole('R_PRODUTO_NEW') }"	     />
+                            </div> 
+			    		</div>
+			    	</div>
+	    		
+				</h:form>
+				
+			</div>
+ 				    
+			<div jsf:id="boxBody" class="box-body">
+				
+					<p:dataTable value="#{produtoBean.produtos}" 
+						             var="produto" 
+						             id="tblProdutos"
+						             rows="10" paginator="true" paginatorPosition="bottom">
+						             
+						<p:column width="5%">
+							<f:facet name="header">id</f:facet>
+							<h:outputText value="#{produto.id}"/>
+						</p:column>
+						
+						<p:column width="5%">
+							<f:facet name="header">codOra</f:facet>
+							<h:outputText value="#{produto.codProduto}"/>
+						</p:column>
+						             
+						<p:column width="10%">
+							<f:facet name="header">Inicio</f:facet>
+							<h:outputText value="#{produto.datainicio.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"  />
+							</h:outputText>
+						</p:column>
+						
+						<p:column width="10%">
+							<f:facet name="header">Fim</f:facet>
+							<h:outputText value="#{produto.datafim.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"  />
+							</h:outputText>
+						</p:column>
+						
+						<p:column width="10%" >
+							<f:facet name="header">Categoria</f:facet>
+							<h:outputText value="#{produto.cats}"/>
+						</p:column>
+						
+						<p:column width="20%" >
+							<f:facet name="header">Descrição</f:facet>
+							<h:outputText value="#{produto.descricao}"/>
+						</p:column>
+						
+						<p:column width="10%" >
+							<f:facet name="header">Preco</f:facet>
+							<h:outputText value="#{produto.preco}"/>
+						</p:column>
+						
+						<p:column width="20%" 
+                                  styleClass="align-center"
+                                  headerText="acoes">
+							<f:facet name="header">Ações</f:facet>
+							
+							<p:commandButton icon="fa fa-upload"
+                            	             title="Upload Imagem"
+                                	         styleClass="btn btn-flat btn-default"
+                                    	     action="#{produtoBean.showUpload(produto.id) }" /> 
+                        	<p:spacer width="10"/>
+							
+	                        <p:commandButton icon="fa fa-edit"
+                            	             title="Alterar"
+                                	         styleClass="btn btn-flat btn-default"
+                                    	     action="#{produtoBean.changeToEdit(produto.id) }" /> 
+                        	<p:spacer width="10"/>
+                        	<p:commandButton icon="fa fa-remove"
+                            	             title="Remover"
+                                	         styleClass="btn btn-flat btn-default"
+                                    	     actionListener="#{produtoBean.changeToDelete(produto.id) }" />
+						</p:column>
+							
+					</p:dataTable>
+					
+			</div>
+			
+		</div>
+	
+	</ui:define>
+	
+    <ui:define name="popups">
+        <ui:include src="dialogImgProduto.xhtml"/>
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+
+
+

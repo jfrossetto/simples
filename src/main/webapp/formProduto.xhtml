@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+	
+    <f:metadata>
+        <f:viewAction action="#{produtoBean.initializeForm(param.produtoId)}"/>
+    </f:metadata>
+	
+	<ui:define name="titulo">
+			Produto
+	</ui:define>
+	
+	<ui:define name="descricaoPagina">
+        <h:outputText rendered="#{produtoBean.viewState eq 'ADDING'}"
+                      value="Novo" />
+        <h:outputText rendered="#{produtoBean.viewState eq 'EDITING'}" 
+                        value="Alterando #{produtoBean.produto.descricao}" />
+	</ui:define>
+
+    <ui:define name="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Produto</a></li>
+    </ui:define>
+
+	<ui:define name="conteudo">
+	
+		<h:form id="formProduto" prependId="false">
+		
+            <div class="row">
+                <div class="col-md-12">
+                    <p:messages id="messages" closable="true" />
+                </div>
+            </div>
+
+            <div class="box">
+            
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        #{produtoBean.produto.id}
+                    </h3>
+                </div>
+		
+                <div class="box-body row">
+                
+                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+						<div class="form-group col-md-4">
+							<p:outputLabel value="Cod Oracle:" for="codprod" />
+    	    	      			<p:inputText id="codprod" value="#{produtoBean.produto.codProduto}"
+        	 		      				 styleClass="form-control"
+        	 		      				 requiredMessage="codigo oracle obrigatório" 
+        	 		      				 required="true" >
+									<p:ajax listener="#{produtoBean.checkCodProduto}" render="messages" update="formProduto" />        	 		      				 
+								</p:inputText>
+						</div>
+						
+						<div class="form-group col-md-8">
+							<p:outputLabel value="Desc Oracle:" for="descoraprod" />
+								<h:outputLabel id="descoraprod"> #{ produtoBean.getDescOra(produtoBean.produto.codProduto) } </h:outputLabel>
+						</div>
+						
+						<div class="form-group col-md-12">
+							<p:outputLabel value="Descricao:" for="descricao" />
+    	    	      			<p:inputText id="descricao" value="#{produtoBean.produto.descricao}"
+        	 		      				 styleClass="form-control"
+            			                 required="true" requiredMessage="Descricao Obrigatória"
+            			                 validatorMessage="#{msg['err.produto.tamdescr']}" >
+									<f:validateLength minimum="20"  maximum="150"/>
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />									
+								</p:inputText>
+						</div>
+                    
+                        <div class="form-group col-md-6">
+							<p:outputLabel value="Val Inicial:" for="datainicio" />
+							<div class="input-group date">
+											<div class="input-group-addon">
+                		    					<i class="fa fa-calendar"></i>
+	                  						</div>
+			            					<h:inputText id="datainicio"
+    	           		 							value="#{produtoBean.produto.datainicio}"
+				                            		required="true" 
+                				            		requiredMessage="Validade Inicial Obrigatória"
+        	       		 							styleClass="form-control "
+        	       		 							onfocus="$('#datainicio').datepicker({format: 'dd/mm/yyyy',language: 'pt-BR' ,autoclose : true});"
+													converter="dateCalendarConverter">
+												<f:ajax listener="#{produtoBean.checkProd}" render="messages formProduto" update="formProduto" />
+											</h:inputText>
+							</div>
+						</div>
+						
+                        <div class="form-group col-md-6">
+							<p:outputLabel value="Val Final:" for="datafim" />
+							<div class="input-group date">
+											<div class="input-group-addon">
+                		    					<i class="fa fa-calendar"></i>
+	                  						</div>
+			            					<h:inputText id="datafim"
+    	           		 							value="#{produtoBean.produto.datafim}"
+				                            		required="true" 
+                				            		requiredMessage="Validade Final Obrigatória"
+        	       		 							styleClass="form-control "
+        	       		 							onfocus="$('#datafim').datepicker({format: 'dd/mm/yyyy',language: 'pt-BR' ,autoclose : true});"
+													converter="dateCalendarConverter">
+												<f:ajax listener="#{produtoBean.checkProd}" render="messages formProduto" update="formProduto" />
+											</h:inputText>
+							</div>
+						</div>
+
+						<div class="form-group col-md-6">
+							<p:outputLabel value="Categoria:" for="cats" />
+    	    	      			<p:inputText id="cats" 
+    	    	      						value="#{produtoBean.produto.cats}"
+        	 		      				 	styleClass="form-control" >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputText>
+						</div>
+						<div class="form-group col-md-6">
+							<p:outputLabel value="Tipo:" for="tipo" />
+    	    	      			<p:inputText id="tipo" value="#{produtoBean.produto.tipo}"
+        	 		      				 styleClass="form-control" >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputText>
+						</div>
+						
+						<div class="form-group col-md-6">
+							<p:outputLabel value="Preco:" for="preco" />
+    	    	      			<p:inputText id="preco" value="#{produtoBean.produto.preco}"
+        	 		      				 styleClass="form-control" >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputText>
+						</div>
+						<div class="form-group col-md-6">
+							<p:outputLabel value="Preco Old:" for="old" />
+    	    	      			<p:inputText id="old" value="#{produtoBean.produto.preco_old}"
+        	 		      				 styleClass="form-control" >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputText>
+						</div>
+						
+					</div>
+					
+                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+						<div class="form-group col-md-12">
+							<p:outputLabel value="Complemento:" for="obscomplemento" />
+    	    	      			<p:inputTextarea rows="4"  id="obscomplemento" value="#{produtoBean.produto.obs_complemento}"
+        	 		      				 styleClass="form-control"  >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputTextarea>
+						</div>
+						<div class="form-group col-md-12">
+							<p:outputLabel value="Validade:" for="obsvalidade" />
+    	    	      			<p:inputTextarea rows="2"  id="obsvalidade" value="#{produtoBean.produto.obs_validade}"
+        	 		      				 styleClass="form-control"  >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputTextarea>
+						</div>
+						<div class="form-group col-md-12">
+							<p:outputLabel value="Acesso:" for="obsacesso" />
+    	    	      			<p:inputTextarea rows="2"  id="obsacesso" value="#{produtoBean.produto.obs_acesso}"
+        	 		      				 styleClass="form-control"  >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputTextarea>
+						</div>
+						<div class="form-group col-md-12">
+							<p:outputLabel value="Info:" for="obsinfo" />
+    	    	      			<p:inputTextarea rows="2"  id="obsinfo" value="#{produtoBean.produto.obs_info}"
+        	 		      				 styleClass="form-control"  >
+									<p:ajax listener="#{produtoBean.checkProd}" render="messages" update="formProduto" />        	 		      				 	
+								</p:inputTextarea>
+						</div>
+						
+					</div>
+                </div>
+
+                <div class="box-footer align-right">
+
+					<p:commandButton value="Salvar" 
+									 action="#{produtoBean.doSave()}"
+									 styleClass="btn btn-flat btn-success"
+									 process="formProduto"
+									 update="formProduto"
+									 rendered="#{produtoBean.viewState eq 'ADDING'}" />
+					<p:commandButton value="Atualizar" 
+									 action="#{produtoBean.doUpdate()}"
+									 styleClass="btn btn-flat btn-success"
+									 process="formProduto"
+									 update="formProduto"
+									 rendered="#{produtoBean.viewState eq 'EDITING'}" />
+					<p:spacer width="10"/>
+					<p:commandButton immediate="true"
+					                 value="Voltar" 
+									 action="#{produtoBean.doCancel()}"
+									 styleClass="btn btn-flat btn-default" />
+				</div>
+				
+			</div>
+				
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+
+
+

@@ -3,12 +3,18 @@ package br.jfr.simples.model ;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.*;
 
-//import br.hh.base.model.PersistentEntity;
-
-import java.sql.Timestamp;
 import java.util.Calendar;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -16,14 +22,14 @@ import java.util.Calendar;
  * 
  */
 @Entity
-@Table(name="nw_produto")
-public class Produto extends PersistentEntity  {
+@Table(name="produto", schema = "simples")
+public class Produto extends Entidade implements Serializable  {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name = "idproduto", unique = true, updatable = false)
-	@SequenceGenerator(name="produto_generator", sequenceName="nw_produto_s" , allocationSize = 1)
+    @Column(name = "id", unique = true, updatable = false)
+	@SequenceGenerator(name="produto_generator", sequenceName="produto_s" , allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="produto_generator")	
 	private Long id;
 

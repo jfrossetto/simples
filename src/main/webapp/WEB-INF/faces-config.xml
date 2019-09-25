@@ -7,7 +7,7 @@
     
 	<application>
 		<locale-config>
-			<default-locale>en</default-locale>
+			<default-locale>pt</default-locale>
 		</locale-config>
 		<message-bundle>application</message-bundle>
         <resource-bundle>  
@@ -17,7 +17,7 @@
 	</application>
 
 	<lifecycle>
-		<phase-listener>br.hh.siteAdmin.util.Autorizador</phase-listener>
+		<phase-listener>br.jfr.simples.util.Autorizador</phase-listener>
 	</lifecycle>
         
 </faces-config>
