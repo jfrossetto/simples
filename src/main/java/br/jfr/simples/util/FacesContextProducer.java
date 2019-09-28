@@ -27,7 +27,6 @@ public class FacesContextProducer {
     }
 
     @Produces
-    @RequestScoped
     PrimeFaces producePrimeContext() {
         return PrimeFaces.current();
     }

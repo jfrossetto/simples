@@ -18,6 +18,8 @@ public class UsuarioServico extends ServicoGenerico<Usuario, Long> implements Se
 
 	public Usuario buscaPorEmail(String email) {
 		
+		logger.info(" usuarioServico.email " );
+		
 		String sql = "select u from Usuario u " +
 						 " where email = :email ";
 		

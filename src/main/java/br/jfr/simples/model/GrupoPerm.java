@@ -22,8 +22,8 @@ public class GrupoPerm extends Entidade implements Serializable {
 	
 	@Id
     @Column(name = "id", unique = true, updatable = false)
-	@SequenceGenerator(name="permissao_generator", sequenceName="permissao_s" , allocationSize = 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="permissao_generator")	
+	@SequenceGenerator(name="grupoperm_generator", sequenceName="grupoperm_s" , allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="grupoperm_generator")	
 	private Long id;
 
 	public Long getId() {

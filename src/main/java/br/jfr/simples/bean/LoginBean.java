@@ -49,7 +49,8 @@ public class LoginBean extends AbstractBean implements Serializable {
 		logger.info("Fazendo login do usuario " + this.email ) ;
 		
         senha_md5 = usuarioServico.retornaMD5(senha); 
-
+        logger.info("senha md5: " + senha_md5);
+        
 		usuario = usuarioServico.buscaPorEmail(email); 
 		
 		if( usuario == null ) {
@@ -75,6 +76,22 @@ public class LoginBean extends AbstractBean implements Serializable {
 		
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public String doLogout() {
 		usuarioLogado.setUsuario(null);
 		return "login.xhtml?faces-redirect=true" ;

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:fragment>
+
+    	        <ul class="sidebar-menu">
+        	        <li class="header">Cadastros</li>
+        	        
+                    <li class="#{activeMenu eq 'Produtos' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_PRODUTO') }" >
+                            <p:link href="listProduto.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Produtos</span>
+                            </p:link>
+                    </li>
+                    
+                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_BANNER') }" >
+                            <p:link href="listBanners.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Banners</span>
+                            </p:link>
+                    </li>
+                    
+                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_CALENDARIO') }" >
+                            <p:link href="listCals.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Calendario</span>
+                            </p:link>
+                    </li>
+                    
+        	        <li class="header">Ger Pedidos</li>
+                    <li class="#{activeMenu eq 'pedanalise' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_PEDANALISE') }" >
+                            <p:link href="listPedidosAnalise.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Pedidos em Analise</span>
+                            </p:link>
+                    </li>
+                    
+        	        <li class="header"
+        	        	jsf:rendered="#{usuarioLogado.temPermissao('R_TLMKT') }" >
+        	        	<span>TLMKT</span>
+        	        </li>
+                    <li class="#{activeMenu eq 'Clientes' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_CLIENTE') }" >
+                            <p:link href="listCliente.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Clientes</span>
+                            </p:link>
+                    </li>
+                    <li class="#{activeMenu eq 'Tlmkt' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_VENDASTLMKT') }" >
+                            <p:link href="vendaTlmkt.xhtml">
+                                <i class="fa fa-cart-arrow-down"></i> 
+                                <span>Vendas - Central</span>
+                            </p:link>
+                    </li>
+
+        	        <li class="header"
+        	        	jsf:rendered="#{usuarioLogado.temPermissao('R_KONSULADO') }" >
+        	        	<span>KONSULADO</span>
+        	        </li>
+                    <li class="#{activeMenu eq 'Distribuidores' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_DISTR') }" >
+                            <p:link href="listDistribuidor.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Distribuidores</span>
+                            </p:link>
+                    </li>
+                    <li class="#{activeMenu eq 'ProdCortesia' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('R_PRODCORT') }" >
+                            <p:link href="listProdCortesia.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Produtos x Produtos Cortesia</span>
+                            </p:link>
+                    </li>
+					
+        	    </ul>
+
+</ui:fragment>
+
+</html>

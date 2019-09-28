@@ -13,13 +13,13 @@
         <meta http-equiv="refresh" content="${request.session.maxInactiveInterval};url=/login.xhtml"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <title>site Admin</title>
+        <title>pdvSimples</title>
 
-        <link rel="shortcut icon" type="image/x-icon" href="#{resource['demand:img/money.ico']}"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['simples:img/money.ico']}"/>
 
         <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
         <h:outputStylesheet library="adminlte" name="css/adminlte.min.css"/>
-        <h:outputStylesheet library="webbudget" name="css/common.css"/>
+        <h:outputStylesheet library="simples" name="css/common.css"/>
         <h:outputStylesheet library="primefaces-bootstrap" name="custom.css"/>
 
     </h:head>
@@ -29,7 +29,7 @@
         <div class="login-box">
             <div class="login-logo wb-font">
                 <a href="index.xhtml" style="font-size: 62px">
-                    <span class="wb-logo-prefix">site</span><span class="wb-logo-sufix">Admin</span>
+                    <span class="wb-logo-prefix">pdv</span><span class="wb-logo-sufix">Simples</span>
                 </a>
             </div>
             <div class="login-box-body">
@@ -42,7 +42,7 @@
                                      pt:autocomplete="off"
                                      pt:autocapitalize="off"
                                      styleClass="form-control" 
-                                     value="#{loginBean.username}" 
+                                     value="#{loginBean.email}" 
                                      placeholder="username"/>
                         <span class="fa fa-user form-control-feedback"></span>
                     </div>

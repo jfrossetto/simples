@@ -7,10 +7,11 @@
         <description>simples PU</description>
         <jta-data-source>java:jboss/datasources/simplesDS</jta-data-source>
         <properties>
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.jdbc.lob.non_contextual_creation" value="true"/>
+			<property name="hibernate.default_schema" value="simples"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
         </properties>
     </persistence-unit>

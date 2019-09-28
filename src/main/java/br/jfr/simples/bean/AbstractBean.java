@@ -27,7 +27,7 @@ public abstract class AbstractBean implements Serializable {
     @Inject
     private RequestContext requestContext;
     @Inject
-    private PrimeFaces primeContext;
+    private transient PrimeFaces primeContext;
 
     public ViewState getViewState() {
 		return viewState;

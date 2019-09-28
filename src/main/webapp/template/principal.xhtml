@@ -13,19 +13,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <title>siteAdmin</title>
+        <title>pdvSimples</title>
 
-        <link rel="shortcut icon" type="image/x-icon" href="#{resource['siteAdmin:img/money.ico']}"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['simples:img/money.ico']}"/>
 
         <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
         <h:outputStylesheet library="ionicons" name="css/ionicons.min.css"/>
         <h:outputStylesheet library="adminlte" name="css/adminlte.min.css"/>
         <h:outputStylesheet library="adminlte" name="css/all-skins.min.css"/>
-        <h:outputStylesheet library="webbudget" name="css/common.css"/>
         <h:outputStylesheet library="minicolors" name="css/jquery.minicolors.css"/>
         <h:outputStylesheet library="primefaces-bootstrap" name="custom.css"/>
+        <h:outputStylesheet library="simples" name="css/common.css"/>
         <h:outputStylesheet library="datepicker" name="css/bootstrap-datepicker.min.css"/>
-
+        
         <ui:insert name="head" />
     </h:head>
 	
@@ -37,10 +37,10 @@
 			<div class="logo" id="cabecalho">
 				<a href="dash.xhtml" class="logo wb-font" >
                     <span class="logo-mini" style="font-size: 30px">
-                        <span class="wb-logo-prefix">s</span><span class="wb-logo-sufix">ADM</span>
+                        <span class="wb-logo-prefix">p</span><span class="wb-logo-sufix">S</span>
                     </span>
                     <span class="wb-logo-prefix" style="font-size: 30px">
-                        site<span class="wb-logo-sufix">Admin</span>
+                        pdv<span class="wb-logo-sufix">Simples</span>
                     </span>
                 </a>
 			</div>
@@ -54,16 +54,16 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <pe:gravatar id="userImage"
-                                                 value="#{usuarioLogado.maut.email}"/>
-                                    <span class="hidden-xs">#{usuarioLogado.maut.email}</span>
+                                                 value="#{usuarioLogado.usuario.email}"/>
+                                    <span class="hidden-xs">#{usuarioLogado.usuario.email}</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
                                         <pe:gravatar style="border-radius: 50%"
-                                                     value="#{usuarioLogado.maut.email}"/>
+                                                     value="#{usuarioLogado.usuario.email}"/>
                                         <p>
-                                            #{usuarioLogado.maut.nome}
-                                            <small>#{usuarioLogado.maut.username}</small>
+                                            #{usuarioLogado.usuario.nome}
+                                            <small>#{usuarioLogado.usuario.nome}</small>
                                         </p>
                                     </li>
                                     <li class="user-footer">
@@ -90,82 +90,7 @@
 
         <aside class="main-sidebar">
 	        <section class="sidebar">
-    	        <ul class="sidebar-menu">
-        	        <li class="header">Cadastros</li>
-        	        
-                    <li class="#{activeMenu eq 'Produtos' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_PRODUTO') }" >
-                            <p:link href="listProduto.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Produtos</span>
-                            </p:link>
-                    </li>
-                    
-                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_BANNER') }" >
-                            <p:link href="listBanners.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Banners</span>
-                            </p:link>
-                    </li>
-                    
-                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_CALENDARIO') }" >
-                            <p:link href="listCals.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Calendario</span>
-                            </p:link>
-                    </li>
-                    
-        	        <li class="header">Ger Pedidos</li>
-                    <li class="#{activeMenu eq 'pedanalise' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_PEDANALISE') }" >
-                            <p:link href="listPedidosAnalise.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Pedidos em Analise</span>
-                            </p:link>
-                    </li>
-                    
-        	        <li class="header"
-        	        	jsf:rendered="#{usuarioLogado.hasRole('R_TLMKT') }" >
-        	        	<span>TLMKT</span>
-        	        </li>
-                    <li class="#{activeMenu eq 'Clientes' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_CLIENTE') }" >
-                            <p:link href="listCliente.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Clientes</span>
-                            </p:link>
-                    </li>
-                    <li class="#{activeMenu eq 'Tlmkt' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_VENDASTLMKT') }" >
-                            <p:link href="vendaTlmkt.xhtml">
-                                <i class="fa fa-cart-arrow-down"></i> 
-                                <span>Vendas - Central</span>
-                            </p:link>
-                    </li>
-
-        	        <li class="header"
-        	        	jsf:rendered="#{usuarioLogado.hasRole('R_KONSULADO') }" >
-        	        	<span>KONSULADO</span>
-        	        </li>
-                    <li class="#{activeMenu eq 'Distribuidores' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_DISTR') }" >
-                            <p:link href="listDistribuidor.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Distribuidores</span>
-                            </p:link>
-                    </li>
-                    <li class="#{activeMenu eq 'ProdCortesia' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.hasRole('R_PRODCORT') }" >
-                            <p:link href="listProdCortesia.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Produtos x Produtos Cortesia</span>
-                            </p:link>
-                    </li>
-					
-        	    </ul>
-         	    
+         	    <ui:include src="menu.xhtml"></ui:include>
         	</section>
         </aside>
     	
@@ -191,10 +116,10 @@
 		</div>
 		
         <footer class="main-footer">
-                    Hopi Hari , TI Sistemas
+                    #{msg.by}
                     <ui:insert name="rodape"/>
                 <div class="pull-right hidden-xs">
-                    <strong>0.0.1</strong>
+                    <strong>#{msg.versao}</strong>
                 </div>
         </footer>
 		
@@ -206,10 +131,10 @@
         <h:outputScript library="primefaces" name="primefaces-locale.js" />
         <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
         <h:outputScript library="adminlte" name="js/app.min.js"/>
-        <h:outputScript library="webbudget" name="js/chart.min.js"/>
+        <h:outputScript library="simples" name="js/chart.min.js"/>
         <h:outputScript library="minicolors" name="js/jquery.minicolors.js"/>
-        <h:outputScript library="webbudget" name="js/helpers.js"/>
-        <h:outputScript library="webbudget" name="js/wbcharts.js"/>
+        <h:outputScript library="simples" name="js/helpers.js"/>
+        <h:outputScript library="simples" name="js/wbcharts.js"/>
         <h:outputScript library="datepicker" name="js/bootstrap-datepicker.min.js"/>
         <h:outputScript library="datepicker" name="locales/bootstrap-datepicker.pt-BR.min.js"/>
 

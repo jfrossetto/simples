@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 
 import br.jfr.simples.model.IEntidade;
 
-public class ServicoGenerico<T extends IEntidade, ID extends Serializable> extends ServicoUtils implements IServicoGenerico<T, ID>, Serializable {
+public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializable> extends ServicoUtils implements IServicoGenerico<T, ID>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,10 @@ public class ServicoGenerico<T extends IEntidade, ID extends Serializable> exten
 	
 	@SuppressWarnings("unchecked")
 	public ServicoGenerico() {
-		this.classe = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		System.out.println( this.getClass().getName() );
+		System.out.println( this.getClass().getSuperclass().getName() );
+		this.classe = (Class<T>) ((ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0];
+		System.out.println( classe.getName() );
 	}
 	
 	protected EntityManager getEntityManager() {

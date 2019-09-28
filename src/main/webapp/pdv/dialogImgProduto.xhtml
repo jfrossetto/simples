@@ -1,0 +1,40 @@
+<p:dialog xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:p="http://primefaces.org/ui"
+          xmlns:f="http://xmlns.jcp.org/jsf/core"
+		  xmlns:h="http://xmlns.jcp.org/jsf/html"          
+          id="imgProdutoDialog"
+          modal="true"
+          resizable="false" 
+          closeOnEscape="true"
+          width="50%"
+          widgetVar="dialogImgProduto" 
+          header="Upload Imagem Produto : #{produtoBean.produto.id} - #{produtoBean.produto.descricao}">
+
+    <div class="box-body">
+    
+    		<h:form id="formUpload" enctype="multipart/form-data"  prependId="false">
+    		
+					<div class="form-group col-md-12">
+							<p:outputLabel value="Imagem:" for="img" />
+ 	    	      			<h:inputFile id="img" value="#{produtoBean.imgPsp}"
+        	 		      				 styleClass="form-control" >
+							</h:inputFile>
+					</div>
+					
+				    <div class="row">
+	        			<div class="col-sm-12 dialog-controls-box">
+    	        			<h:commandButton value="Upload"
+        	                     action="#{ produtoBean.doUpload() }"
+            	                 styleClass="btn btn-flat btn-success" />
+            				<p:spacer width="10"/>
+            				<h:commandButton value="Fechar"
+                        	     styleClass="btn btn-flat btn-default"
+                            	 onclick="closeDialog('dialogImgProduto')" />
+        				</div>
+        			</div>
+        			
+		    </h:form>
+		    
+    </div>
+    
+</p:dialog>

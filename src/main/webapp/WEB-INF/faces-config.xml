@@ -9,7 +9,7 @@
 		<locale-config>
 			<default-locale>pt</default-locale>
 		</locale-config>
-		<message-bundle>application</message-bundle>
+		<message-bundle>resources</message-bundle>
         <resource-bundle>  
             <base-name>messages</base-name>  
             <var>msg</var>
