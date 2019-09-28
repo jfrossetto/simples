@@ -2,12 +2,16 @@ package br.jfr.simples.service;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.model.Produto;
@@ -17,99 +21,64 @@ import br.jfr.simples.model.Usuario;
 public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	public List<Produto> findAll() {
-		EntityManager em = this.getEntityManager();
-		
-		TypedQuery<Produto> query = em
-				.createQuery(
-						"select p from Produto p"
-						+ " order by id desc " 
-						,Produto.class);
-
-		return query.getResultList();
-	}
 	
-	public List<Produto> findByFiltro(String codigo, String filtro, Calendar dataini, Calendar datafim) {
+	public List<Produto> buscaPorFiltro(String codigo, String filtro, Calendar dataini, Calendar datafim) {
 		
-		EntityManager em = this.getEntityManager();
-		String sql ;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String,Object> mapaParam = new HashMap<>() ;
+		StringBuilder sql = new StringBuilder();
 		
-		sql = "select p from Produto p where 1 = 1 ";
+		sql.append("select p from Produto p where 1 = 1 ");
 		
 		if( ! (codigo == null || codigo.equals("") ) ) {
-			sql += " and p.id = :pidprod " ; 
+			sql.append(" and p.id = :id " );
+			mapaParam.put("id", new Long(codigo) );
 		}
 		
 		if( dataini != null ) {
-			sql = sql + " and p.datainicio >= :pdtini " ;
+			sql.append(" and p.datainicio >= :dtini " );
+			mapaParam.put("dtini", dataini.getTime() );
 		}
+		
 		if( datafim != null ) {
-			sql = sql + " and p.datafim < :pdtfim " ;			
+			sql.append(" and p.datafim < :dtfim " );
+			mapaParam.put("dtfim", datafim.getTime() );
 		}
+		
 		if( !(filtro == null || filtro.equals("")) ) {
-			sql += " and ( p.descricao like :pfiltro " 
-	    		+ "    or p.cats like :pfiltro " 
-		    	+ "    or p.codProduto like :pfiltro ) " ;
+			sql.append(" and ( p.descricao like :pfiltro ") 
+				.append( "    or p.cats like :pfiltro " )
+				.append( "    or p.codProduto like :filtro ) " );
+	    	mapaParam.put("filtro", "%"+filtro+"%" );
+	    		
 		}
 		
-		sql += " order by p.id desc " ;						
+		sql.append(" order by p.id desc ");						
 		
-		TypedQuery<Produto> query = em
-				.createQuery( sql , 
-								Produto.class ) ;
-		
-		if( sql.contains(":pidprod") ) {
-			query.setParameter("pidprod", new Long(codigo) );
-		}
-		if( sql.contains(":pdtini") ) {
-			String sdatai = sdf.format(dataini.getTime()) ;
-			query.setParameter("pdtini", dataini , TemporalType.TIMESTAMP );
-		}
-		if( sql.contains(":pdtfim") ) {
-			String sdataf = sdf.format(datafim.getTime()) ;
-			query.setParameter("pdtfim", datafim , TemporalType.TIMESTAMP  );
-		}
-		if( sql.contains(":pfiltro") ) {
-			query.setParameter("pfiltro", "%"+filtro+"%");
-		}
-		
-		try {
-			return query.getResultList();
-		} catch ( javax.persistence.NoResultException e ) {
-			return null;
-		}
+		return carregaRegistros(sql.toString(), mapaParam);
 		
 	}
 
 	
-	public List<Produto> findByCat(String cat) {
+	public List<Produto> buscaPorCat(String cat) {
 		
-		EntityManager em = this.getEntityManager();
-		String sql ;
+		Map<String,Object> mapaParam = new HashMap<>() ;
+		StringBuilder sql = new StringBuilder();
 		
-		sql = "select p from Produto p where 1 = 1 "
-	    		+ "    and p.cats = :pcat "
-		    	+ "    order by preco " ;
+		sql.append("select p from Produto p where 1 = 1 ");
 		
-		TypedQuery<Produto> query = em
-				.createQuery( sql , 
-								Produto.class ) ;
-		
-		query.setParameter("pcat", cat);
-		
-		try {
-			return query.getResultList();
-		} catch ( javax.persistence.NoResultException e ) {
-			return null;
+		if( cat != null && !cat.isEmpty() ) {
+			sql.append("    and p.cats = :pcat ");
+			mapaParam.put("cat",cat);
 		}
+		sql.append(" order by preco " );
+		
+		return carregaRegistros(sql.toString(), mapaParam);
 		
 	}
 	
 	
     public List<Produto> listProdutos() {
-        return this.buscaTodos();
+        return buscaTodos();
     }
     
     public Produto findById(Long id) {

@@ -8,15 +8,15 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.inject.Inject;
 
-//import br.jfr.simples.bean.UsuarioLogado;
+import br.jfr.simples.bean.UsuarioLogado;
 
 
 public class Autorizador implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
 
-//	@Inject 
-//	private UsuarioLogado usuarioLogado ;
+	@Inject 
+	private UsuarioLogado usuarioLogado ;
 
 	@Override
 	public void afterPhase(PhaseEvent event) {
@@ -33,7 +33,7 @@ public class Autorizador implements PhaseListener {
 		String nomePagina = context.getViewRoot().getViewId();
 
 		System.out.println(nomePagina);
-        /*
+        
 		if ("/login.xhtml".equals(nomePagina) || "/home.xhtml".equals(nomePagina) ) {
 			return;
 		}
@@ -45,12 +45,12 @@ public class Autorizador implements PhaseListener {
 		}
 		
 		// verifica se possui acesso a url 
-		if( ! usuarioLogado.hasUrl(nomePagina) ) {
+		if( ! usuarioLogado.temPermissao(nomePagina) ) {
 			NavigationHandler handler = context.getApplication().getNavigationHandler();
 			handler.handleNavigation(context, null, "/home?faces-redirect=true");
 			context.renderResponse();
 		}
-		*/
+		
 	}
 
 	@Override

@@ -15,8 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="permissao", schema = "simples",
-       indexes= @Index(name="permissao_n1", columnList = "descricao") )
+@Table(name="permissao", //schema = "simples",
+       indexes= @Index(name="permissao_n1", columnList = "descricao", unique=false) )
 public class Permissao extends Entidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;

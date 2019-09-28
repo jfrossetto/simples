@@ -97,13 +97,13 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 		this.datafim = datafim;
 	}
 
-//	public UploadedFile getImgPsp() {
-//		return imgPsp;
-//	}
+	//public UploadedFile getImgPsp() {
+	//	return imgPsp;
+	//}
 
-//	public void setImgPsp(UploadedFile imgPsp) {
-//		this.imgPsp = imgPsp;
-//	}
+	//public void setImgPsp(UploadedFile imgPsp) {
+	//this.imgPsp = imgPsp;
+	//}
 
 	public String getFiltro() {
 		return filtro;
@@ -121,10 +121,6 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getDescOra(String codora) {
-		return produtoService.findDescOra(codora);
-	}
-	
 	public Part getImgPsp() {
 		return imgPsp;
 	}
@@ -135,13 +131,13 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 
 	@PostConstruct
     void init() {
-    	System.out.println("init ...");
+    	logger.info("init ...");
     	this.produto = new Produto();
     }
     
 	public void initializeListing() {
         this.viewState = ViewState.LISTING;
-		this.produtos = produtoService.listProdutos();
+		this.produtos = produtoServico.buscaTodos();
     }
 
     public void initializeForm(long produtoId) {
@@ -151,7 +147,7 @@ public class ProdutoBean extends AbstractBean implements Serializable {
             this.produto = new Produto();
         } else {
             this.viewState = ViewState.EDITING;
-            this.produto = this.produtoService.findById(produtoId);
+            this.produto = this.produtoServico.findById(produtoId);
     		System.out.println( produto.getDescricao() );
         }
     }
@@ -159,21 +155,6 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 	public void checkProd(javax.faces.event.AjaxBehaviorEvent event) {
 	}
     
-	public void checkCodProduto(javax.faces.event.AjaxBehaviorEvent event) {
-    	codProdutoOk() ;
-	}
-    
-	public Boolean codProdutoOk() {
-		List <Object[]> contratos ;
-		contratos = produtoService.findContrato( produto.getCodProduto() ) ;
-		for( Object[] contrato : contratos ) {
-			return true ; 
-		}
-		this.addError( true, "Esta Cod.Produto Oracle n�o possui contratos aprovados !" , "erro"  );			
-		produto.setCodProduto(null);
-		return false ;
-	}
-	
     public String changeToAdd() {
         this.viewState = ViewState.ADDING;
         return "formProduto.xhtml?faces-redirect=true";
@@ -189,7 +170,7 @@ public class ProdutoBean extends AbstractBean implements Serializable {
     }
     
 	public void doSearch() {
-		produtos = produtoService.findByFiltro(codigo, filtro, dataini, datafim);
+		produtos = produtoServico.buscaPorFiltro(codigo, filtro, dataini, datafim);
 		return ;	
 	}
 	
@@ -206,7 +187,7 @@ public class ProdutoBean extends AbstractBean implements Serializable {
     }
     
     public void showUpload(Long id) {
-        produto = produtoService.findById(id); 
+        produto = produtoServico.findById(id); 
         this.updateAndOpenDialog("imgProdutoDialog", "dialogImgProduto");
     }
     
@@ -233,15 +214,8 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 
     public void doSave() {
     	
-    	if( ! codProdutoOk() ) {
-    		return ;
-    	}
-    	
-    	//produto.setCreatedBy( this.usarioLogado.getMaut().getId() );
-    	//produto.setLastUpdatedBy( this.usarioLogado.getMaut().getId() );
-    	
         try {
-            this.produtoService.salvar(produto);
+            this.produtoServico.salvar(produto);
             this.produto = new Produto();
             this.addInfo(true, "Produto Incluido");
         } catch (InternalServiceError ex) {
@@ -255,14 +229,8 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 
     public void doUpdate() {
     	
-    	if( ! codProdutoOk() ) {
-    		return ;
-    	}
-    	
-    	//produto.setLastUpdatedBy( this.usarioLogado.getMaut().getId() );
-    	
         try {
-            this.produtoService.atualizaProduto(produto);
+            this.produtoServico.atualizaProduto(produto);
             this.addInfo(true, "Produto Atualizado !");
             this.logger.info("produto atualizado: " + produto.getDescricao() );
         } catch (InternalServiceError ex) {

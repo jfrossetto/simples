@@ -1,23 +1,22 @@
 package br.jfr.simples.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import br.jfr.simples.model.Permissao;
 import br.jfr.simples.model.Usuario;
 
 @RequestScoped
-public class UsuarioServico extends ServicoGenerico<Usuario, Long> {
+public class UsuarioServico extends ServicoGenerico<Usuario, Long> implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	public Usuario buscaPorEmail(String email) {
-		
-		EntityManager em = this.getEntityManager();
 		
 		String sql = "select u from Usuario u " +
 						 " where email = :email ";

@@ -63,14 +63,14 @@ public class UsuarioLogado implements Serializable {
 		this.permissoes = permissoes;
 	}
 
-	public boolean hasPermissao(String perm) {
+	public boolean temPermissao(String perm) {
 		if( permissoes == null) {
 			return false;
 		}
 		return permissoes.stream().allMatch( p -> p.getDescricao().equals(perm) );
 	}
 	
-	public boolean hasUrl(String url) {
+	public boolean temUrl(String url) {
 		/*
 		if( roles == null) {
 			return false;

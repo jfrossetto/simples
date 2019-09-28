@@ -5,14 +5,13 @@
     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="simplesPU" transaction-type="JTA">
         <description>simples PU</description>
-		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->        
-        <!-- java transaction api || JNDI -->
         <jta-data-source>java:jboss/datasources/simplesDS</jta-data-source>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.show_sql" value="false" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.jdbc.lob.non_contextual_creation" value="true"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
         </properties>
     </persistence-unit>
 </persistence>

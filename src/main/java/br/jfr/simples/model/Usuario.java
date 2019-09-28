@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -16,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="usuario", schema = "simples",
+@Table(name="usuario", //schema = "simples",
        indexes= @Index(name="usuario_n1", columnList = "email") )
 public class Usuario extends Entidade implements Serializable  {
 
@@ -52,6 +53,7 @@ public class Usuario extends Entidade implements Serializable  {
 	private Calendar ultLogin ;
 
 	@ManyToOne
+	@JoinColumn(name = "grupo_id")
 	private Grupo grupo;
 	
 	public String getEmail() {

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="../_template.xhtml">
+
+    <f:metadata>
+    	<f:viewParam name="idemail" value="#{clienteBean.idemail}"/>
+    </f:metadata>
+
+	<ui:define name="conteudo">
+	
+<!-- Main Banner Ends -->
+<!-- Main Container Starts -->
+	<div id="main-container" class="container">
+	<!-- Breadcrumb Starts -->
+		<ol class="breadcrumb">
+			<li><a href="home.xhtml">Home</a></li>
+			<li class="active">Pagina Nao Encontrada</li>
+		</ol>
+	<!-- Breadcrumb Ends -->
+	<!-- Main Heading Starts -->
+		<h2 class="main-heading text-center">
+			Pagina Nao Encontrada
+		</h2>
+	<!-- Main Heading Ends -->
+	<!-- Login Form Section Starts -->
+		<section class="login-area">
+			<div class="row">
+				<div class="col-sm-6">
+				<!-- Login Panel Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">Erro</h3>
+						</div>
+						<div class="panel-body">
+							<h2>
+								Pagina Não Encontrada
+							</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	<!-- Login Form Section Ends -->
+	</div>
+<!-- Main Container Ends -->
+	
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+

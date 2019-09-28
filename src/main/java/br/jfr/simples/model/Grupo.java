@@ -18,8 +18,8 @@ import javax.persistence.Table;
 import br.jfr.simples.converter.BooleanToStringConverter;
 
 @Entity
-@Table(name="grupo", schema = "simples",
-       indexes= @Index(name="grupo_n1", columnList = "descricao") )
+@Table(name="grupo", //schema = "simples",
+       indexes= @Index(name="grupo_n1", columnList = "descricao", unique=false) )
 public class Grupo extends Entidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;

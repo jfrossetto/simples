@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.slf4j.Logger;
 
 import br.jfr.simples.model.IEntidade;
 
@@ -26,14 +27,15 @@ public class ServicoGenerico<T extends IEntidade, ID extends Serializable> exten
 
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	@Inject
+	protected Logger logger;
 	
 	private final Class<T> classe;
-	//private final IEntidade entidade;
 	
 	@SuppressWarnings("unchecked")
 	public ServicoGenerico() {
 		this.classe = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		//this.entidade = (IEntidade) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 	
 	protected EntityManager getEntityManager() {
@@ -119,6 +121,17 @@ public class ServicoGenerico<T extends IEntidade, ID extends Serializable> exten
 			return null ;
 		}
 		
+	}
+
+	public List<T> carregaRegistros(String sql, Map<String, Object> mapaParam) {
+		EntityManager em = this.getEntityManager();
+		Query query = em.createQuery(sql);
+		mapaParam.forEach( (k,v) -> query.setParameter(k, v) );
+		try {
+			return (List<T>) query.getResultList();
+		} catch (javax.persistence.NoResultException e) {
+			return null ;
+		}
 	}
 
 }

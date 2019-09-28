@@ -3,15 +3,15 @@ package br.jfr.simples.service;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 
 public abstract class ServicoUtils implements IServicoUtils {
 	
-	@Inject
-	public Logger logger;
-
 	public String retornaMD5(String str) {
 		MessageDigest m;
 		try {
@@ -22,6 +22,11 @@ public abstract class ServicoUtils implements IServicoUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String formataDataDma(Calendar data) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(data);
 	}
 
 

@@ -14,6 +14,7 @@ public interface IServicoGenerico<T extends IEntidade, ID extends Serializable> 
     public T salvar(T entity);
     public void excluir(T entity);
     public List<T> carregaRegistros(String sql);
+    public List<T> carregaRegistros(String sql,Map<String,Object> mapaParam);    
     public T carregaEntidade(String sql,Map<String,Object> mapaParam);
 	
 }
