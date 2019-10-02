@@ -6,6 +6,8 @@ import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.EntityListeners;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,17 +24,19 @@ public abstract class Entidade implements IEntidade , Serializable {
     @Column(name = "criadoem")
     private Calendar criadoEm;
 	
-    @Column(name = "created_by")
+	@ManyToOne
+	@JoinColumn(name = "criadopor")
     private Usuario criadoPor;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "alteradoem")
     private Calendar AlteradoEm;
     
-    @Column(name = "alteradoPor")
+	@ManyToOne
+	@JoinColumn(name = "alteradopor")
     private Usuario alteradoPor;
 
-    @Column(name="regativo")
+    @Column(name="regativo",length=1)
     @Convert(converter=BooleanToStringConverter.class)
     private Boolean regAtivo;
 	

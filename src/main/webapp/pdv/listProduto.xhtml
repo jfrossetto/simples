@@ -7,7 +7,7 @@
     xmlns:jsf="http://xmlns.jcp.org/jsf"	
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="template/principal.xhtml">
+<ui:composition template="../template/principal.xhtml">
 
     <ui:param name="activeMenu" value="Produtos"/>
  
@@ -43,46 +43,62 @@
 		    		<p:defaultCommand target="btBusca"/>
                     <div class="row">
       	            	<div class="col-md-8">
-		            		<p:calendar id="dataini" 
-               		 				value="#{produtoBean.dataini}"
-                    	        	mask="true"
-                        		    pattern="dd/MM/yyyy"
-									converter="dateCalendarConverter">
-							</p:calendar>
-							<p:spacer width="10"/>		            	
-							<p:outputLabel value=" ... "/>
-							<p:spacer width="10"/>	
+      	            	<h:panelGroup styleClass="form-group form-control-calendar">
+      	            		<div class="col-md-2">
+			            		<p:calendar id="dataini" 
+    	           		 				value="#{produtoBean.dataini}"
+        	            	        	mask="true"
+            	            		    pattern="dd/MM/yyyy"
+										converter="dateCalendarConverter">
+								</p:calendar>
+							</div>
+						</h:panelGroup>
+      	            	<h:panelGroup styleClass="form-group form-control-calendar">
+      	            		<div class="col-md-2">
 		            		<p:calendar id="datafim" 
                		 				value="#{produtoBean.datafim}"
                     	        	mask="true"
                         		    pattern="dd/MM/yyyy"
 									converter="dateCalendarConverter">
 							</p:calendar>
-							<p:spacer width="10"/>
-							<p:inputText  id="id_ped" 
+							</div>
+						</h:panelGroup>
+      	            	<h:panelGroup styleClass="form-group">
+      	            		<div class="col-md-3">
+								<p:inputText  id="id_ped" 
+											  styleClass="form-control"
 								              value="#{produtoBean.codigo}" 
 								              placeholder="id produto, cod oracle" >
-							</p:inputText>
-							<p:spacer width="10"/>
-							<p:inputText  id="descricao" 
-								              value="#{produtoBean.filtro}" 
-								              placeholder="descricao , categoria" >
-							</p:inputText>
-							<p:spacer width="10"/>
-			    			<p:commandButton id="btBusca"
+								</p:inputText>
+							</div>
+						</h:panelGroup>
+      	            	<h:panelGroup styleClass="form-group">
+      	            		<div class="col-md-3">
+								<p:inputText  id="descricao"
+										    styleClass="form-control" 
+								            value="#{produtoBean.filtro}" 
+								            placeholder="descricao , categoria" >
+								</p:inputText>
+							</div>
+						</h:panelGroup>
+      	            	<h:panelGroup styleClass="form-group">
+      	            		<div class="col-md-2">
+			    				<p:commandButton id="btBusca"
 	    					                 icon="fa fa-search"
-	    					                 value="Busca" 
 	    			    		             action="#{produtoBean.doSearch()}" 
 	    			            		     update="tblProdutos"
-											 styleClass="btn btn-flat btn-info" />
+											 styleClass="btn btn-flat btn-default" />
+							</div>
+						</h:panelGroup>
 						</div>
+
 						<div class="col-md-4">
 							<div class="box-tools pull-right">
                         	<p:commandButton immediate="true"
                             	             value="Novo"
                                 	         action="#{produtoBean.changeToAdd()}"
                                     	     styleClass="btn btn-flat btn-info"
-                                    	     rendered="#{usuarioLogado.hasRole('R_PRODUTO_NEW') }"	     />
+                                    	     rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW') }"	     />
                             </div> 
 			    		</div>
 			    	</div>
@@ -103,11 +119,21 @@
 							<h:outputText value="#{produto.id}"/>
 						</p:column>
 						
-						<p:column width="5%">
-							<f:facet name="header">codOra</f:facet>
-							<h:outputText value="#{produto.codProduto}"/>
+						<p:column width="20%" >
+							<f:facet name="header">Descrição</f:facet>
+							<h:outputText value="#{produto.descricao}"/>
 						</p:column>
-						             
+						
+						<p:column width="10%" >
+							<f:facet name="header">Categoria</f:facet>
+							<h:outputText value="#{produto.categoria}"/>
+						</p:column>
+						
+						<p:column width="10%" >
+							<f:facet name="header">Preco</f:facet>
+							<h:outputText value="#{produto.preco}"/>
+						</p:column>
+						
 						<p:column width="10%">
 							<f:facet name="header">Inicio</f:facet>
 							<h:outputText value="#{produto.datainicio.time}">
@@ -122,19 +148,14 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column width="10%" >
-							<f:facet name="header">Categoria</f:facet>
-							<h:outputText value="#{produto.cats}"/>
+						<p:column width="5%">
+							<f:facet name="header">Ativo</f:facet>
+							<h:outputText value="#{produto.regAtivo}"/>
 						</p:column>
 						
-						<p:column width="20%" >
-							<f:facet name="header">Descrição</f:facet>
-							<h:outputText value="#{produto.descricao}"/>
-						</p:column>
-						
-						<p:column width="10%" >
-							<f:facet name="header">Preco</f:facet>
-							<h:outputText value="#{produto.preco}"/>
+						<p:column width="10%">
+							<f:facet name="header">Cadastrado Por</f:facet>
+							<h:outputText value="#{produto.criadoPor.nome}"/>
 						</p:column>
 						
 						<p:column width="20%" 

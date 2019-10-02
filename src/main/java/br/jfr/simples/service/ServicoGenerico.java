@@ -18,8 +18,10 @@ import javax.transaction.Transactional;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.model.IEntidade;
+import br.jfr.simples.util.InternalServiceError;
 
 public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializable> extends ServicoUtils implements IServicoGenerico<T, ID>, Serializable {
 
@@ -28,17 +30,20 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Inject
-	protected Logger logger;
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final Class<T> classe;
 	
 	@SuppressWarnings("unchecked")
 	public ServicoGenerico() {
-		System.out.println( this.getClass().getName() );
-		System.out.println( this.getClass().getSuperclass().getName() );
-		this.classe = (Class<T>) ((ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0];
-		System.out.println( classe.getName() );
+		logger.info( this.getClass().getName() );
+		logger.info( this.getClass().getSuperclass().getName() );
+		ParameterizedType parameterizedType = pegaParameterizedType(this.getClass());
+		if( parameterizedType == null ) {
+			throw new InternalServiceError("nao e uma classe generica");
+		}
+		this.classe = (Class<T>) parameterizedType.getActualTypeArguments()[0];
+		logger.info( classe.getName() );
 	}
 	
 	protected EntityManager getEntityManager() {

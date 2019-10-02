@@ -6,15 +6,29 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     
 	<application>
-		<locale-config>
-			<default-locale>pt</default-locale>
-		</locale-config>
-		<message-bundle>resources</message-bundle>
-        <resource-bundle>  
-            <base-name>messages</base-name>  
+	    <locale-config>
+            <default-locale>pt_br</default-locale>
+            <supported-locale>pt_br</supported-locale>
+        </locale-config>
+        <message-bundle>messages</message-bundle>
+        <resource-bundle>
+            <base-name>messages</base-name>
             <var>msg</var>
-        </resource-bundle>  
+        </resource-bundle>
 	</application>
+	
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.InputNumberRenderer</renderer-type>
+            <renderer-class>br.jfr.simples.componente.CustomInputNumberRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.CalendarRenderer</renderer-type>
+            <renderer-class>br.jfr.simples.componente.CustomCalendarRenderer</renderer-class>
+        </renderer>
+    </render-kit>
 
 	<lifecycle>
 		<phase-listener>br.jfr.simples.util.Autorizador</phase-listener>

@@ -6,19 +6,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 import br.jfr.simples.model.Permissao;
 import br.jfr.simples.model.Usuario;
 
-@RequestScoped
+@ApplicationScoped
 public class UsuarioServico extends ServicoGenerico<Usuario, Long> implements Serializable {
-	
+
+	@Inject 
+	private Logger logger;
+
 	private static final long serialVersionUID = 1L;
 
 	public Usuario buscaPorEmail(String email) {
 		
-		logger.info(" usuarioServico.email " );
+		logger.info(" buscaPorEmail " );
 		
 		String sql = "select u from Usuario u " +
 						 " where email = :email ";

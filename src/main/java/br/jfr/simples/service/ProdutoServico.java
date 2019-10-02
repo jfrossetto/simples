@@ -45,9 +45,8 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		}
 		
 		if( !(filtro == null || filtro.equals("")) ) {
-			sql.append(" and ( p.descricao like :pfiltro ") 
-				.append( "    or p.cats like :pfiltro " )
-				.append( "    or p.codProduto like :filtro ) " );
+			sql.append(" and ( p.descricao like :filtro ") 
+				.append( "    or p.categoria like :filtro )" );
 	    	mapaParam.put("filtro", "%"+filtro+"%" );
 	    		
 		}

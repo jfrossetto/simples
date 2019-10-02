@@ -13,74 +13,43 @@
     	        <ul class="sidebar-menu">
         	        <li class="header">Cadastros</li>
         	        
+                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
+                            jsf:rendered="#{usuarioLogado.temPermissao('Categorias') }" >
+                            <p:link href="listBanners.xhtml">
+                                <i class="fa fa-credit-card"></i> 
+                                <span>Categorias</span>
+                            </p:link>
+                    </li>
+        	        
                     <li class="#{activeMenu eq 'Produtos' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_PRODUTO') }" >
-                            <p:link href="listProduto.xhtml">
+                            jsf:rendered="#{usuarioLogado.temPermissao('Produtos') }" >
+                            <p:link href="/pdv/listProduto.xhtml?faces-redirect=true">
                                 <i class="fa fa-credit-card"></i> 
                                 <span>Produtos</span>
                             </p:link>
                     </li>
                     
-                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_BANNER') }" >
-                            <p:link href="listBanners.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Banners</span>
-                            </p:link>
-                    </li>
-                    
-                    <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_CALENDARIO') }" >
-                            <p:link href="listCals.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Calendario</span>
-                            </p:link>
-                    </li>
-                    
-        	        <li class="header">Ger Pedidos</li>
-                    <li class="#{activeMenu eq 'pedanalise' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_PEDANALISE') }" >
-                            <p:link href="listPedidosAnalise.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Pedidos em Analise</span>
-                            </p:link>
-                    </li>
-                    
         	        <li class="header"
-        	        	jsf:rendered="#{usuarioLogado.temPermissao('R_TLMKT') }" >
-        	        	<span>TLMKT</span>
+        	        	jsf:rendered="#{usuarioLogado.temPermissao('Frente Caixa') }" >
+        	        	<span>Frente de Caixa</span>
         	        </li>
                     <li class="#{activeMenu eq 'Clientes' ? 'active' : ''}"
                             jsf:rendered="#{usuarioLogado.temPermissao('R_CLIENTE') }" >
                             <p:link href="listCliente.xhtml">
                                 <i class="fa fa-credit-card"></i> 
-                                <span>Clientes</span>
-                            </p:link>
-                    </li>
-                    <li class="#{activeMenu eq 'Tlmkt' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_VENDASTLMKT') }" >
-                            <p:link href="vendaTlmkt.xhtml">
-                                <i class="fa fa-cart-arrow-down"></i> 
-                                <span>Vendas - Central</span>
+                                <span>Venda Balcão</span>
                             </p:link>
                     </li>
 
         	        <li class="header"
-        	        	jsf:rendered="#{usuarioLogado.temPermissao('R_KONSULADO') }" >
-        	        	<span>KONSULADO</span>
+        	        	jsf:rendered="#{usuarioLogado.temPermissao('Consultas') }" >
+        	        	<span>Consultas</span>
         	        </li>
                     <li class="#{activeMenu eq 'Distribuidores' ? 'active' : ''}"
                             jsf:rendered="#{usuarioLogado.temPermissao('R_DISTR') }" >
                             <p:link href="listDistribuidor.xhtml">
                                 <i class="fa fa-credit-card"></i> 
-                                <span>Distribuidores</span>
-                            </p:link>
-                    </li>
-                    <li class="#{activeMenu eq 'ProdCortesia' ? 'active' : ''}"
-                            jsf:rendered="#{usuarioLogado.temPermissao('R_PRODCORT') }" >
-                            <p:link href="listProdCortesia.xhtml">
-                                <i class="fa fa-credit-card"></i> 
-                                <span>Produtos x Produtos Cortesia</span>
+                                <span>Vendas</span>
                             </p:link>
                     </li>
 					

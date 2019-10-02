@@ -20,12 +20,12 @@
         <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
         <h:outputStylesheet library="ionicons" name="css/ionicons.min.css"/>
         <h:outputStylesheet library="adminlte" name="css/adminlte.min.css"/>
-        <h:outputStylesheet library="adminlte" name="css/all-skins.min.css"/>
+        <h:outputStylesheet library="adminlte" name="css/_all-skins.min.css"/>
         <h:outputStylesheet library="minicolors" name="css/jquery.minicolors.css"/>
-        <h:outputStylesheet library="primefaces-bootstrap" name="custom.css"/>
+
         <h:outputStylesheet library="simples" name="css/common.css"/>
-        <h:outputStylesheet library="datepicker" name="css/bootstrap-datepicker.min.css"/>
-        
+        <h:outputStylesheet library="primefaces-bootstrap" name="custom.css"/>
+                
         <ui:insert name="head" />
     </h:head>
 	
@@ -37,7 +37,7 @@
 			<div class="logo" id="cabecalho">
 				<a href="dash.xhtml" class="logo wb-font" >
                     <span class="logo-mini" style="font-size: 30px">
-                        <span class="wb-logo-prefix">p</span><span class="wb-logo-sufix">S</span>
+                        <span class="wb-logo-prefix">pdv</span><span class="wb-logo-sufix"></span>
                     </span>
                     <span class="wb-logo-prefix" style="font-size: 30px">
                         pdv<span class="wb-logo-sufix">Simples</span>
@@ -116,8 +116,8 @@
 		</div>
 		
         <footer class="main-footer">
-                    #{msg.by}
-                    <ui:insert name="rodape"/>
+                #{msg.by}
+                <ui:insert name="rodape"/>
                 <div class="pull-right hidden-xs">
                     <strong>#{msg.versao}</strong>
                 </div>
@@ -130,16 +130,17 @@
         <h:outputScript library="primefaces" name="jquery/jquery.js" />
         <h:outputScript library="primefaces" name="primefaces-locale.js" />
         <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
-        <h:outputScript library="adminlte" name="js/app.min.js"/>
+        <h:outputScript library="adminlte" name="js/adminlte.js"/>
         <h:outputScript library="simples" name="js/chart.min.js"/>
         <h:outputScript library="minicolors" name="js/jquery.minicolors.js"/>
         <h:outputScript library="simples" name="js/helpers.js"/>
         <h:outputScript library="simples" name="js/wbcharts.js"/>
-        <h:outputScript library="datepicker" name="js/bootstrap-datepicker.min.js"/>
-        <h:outputScript library="datepicker" name="locales/bootstrap-datepicker.pt-BR.min.js"/>
 
 		<script type ="text/javascript">
-		
+
+			//$(".ui-inputnumber").removeClass();
+			//$(".pinputnumber input:first-child").removeClass().addClass("form-control");
+			
 			 $(function () {
 				$('.input-group.date').datepicker({
 				    format: "dd/mm/yyyy",

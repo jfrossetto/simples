@@ -8,6 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+
 import br.jfr.simples.model.Permissao;
 import br.jfr.simples.model.Usuario;
 import br.jfr.simples.service.UsuarioServico;
@@ -23,6 +25,9 @@ public class LoginBean extends AbstractBean implements Serializable {
 	
 	@Inject 
 	private UsuarioLogado usuarioLogado ;
+	
+	@Inject 
+	private Logger logger;
 	
 	private Usuario usuario;
 	private List<Permissao> permissoes ;
@@ -46,7 +51,7 @@ public class LoginBean extends AbstractBean implements Serializable {
 			return null;
 		}
 		
-		logger.info("Fazendo login do usuario " + this.email ) ;
+		logger.info("Fazendo login do usuario >>> " + this.email ) ;
 		
         senha_md5 = usuarioServico.retornaMD5(senha); 
         logger.info("senha md5: " + senha_md5);

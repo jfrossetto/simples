@@ -7,6 +7,12 @@
     Created on : 26/10/2015
 */
 
+/*
+.ui-widget {
+   font-size: 100% !important;
+}
+*/
+
 /* customizacao da apreentacao do texto dos botoes */
 .ui-button {
     height: 34px;
@@ -16,15 +22,16 @@
 .ui-corner-all, .ui-state-default {
     border-radius: 0 !important;
 }
+
 .ui-selectonemenu-trigger {
     border-radius: 0 !important;
 }
 
 /* tira aquele fundo vermelho do label na hr da validacao */
 label.ui-state-error {
-    background: none !important;
+    background: #CC0000 !important; /* none */
 }
-
+ 
 /* tira a sembra para que os botoes fiquem certos quando em widgets */
 .ui-widget-content button.ui-state-default {
     box-shadow: none !important;
@@ -100,18 +107,20 @@ div.ui-paginator {
     display: none;
 }
 
-/* corrige a exibicao do selectonemenu */
+/* corrige a exibicao do selectonemenu */ 
 .ui-selectonemenu {
     height: 34px;
     display: block !important;
-    border-color: #d2d6de !important;
+    border-color: #d2d6de   !important;  /*   #CC0000  */ 
     border-radius: 0 !important;
 }
+
 .ui-selectonemenu-trigger {
     width: 30px !important;
     padding: 3px 6px !important;
     border-radius: 0 !important;
 }
+
 .ui-selectonemenu-label {
     padding: 6px !important;
 }
@@ -141,3 +150,7 @@ div.ui-paginator {
     border: none !important;
     padding: 0px !important;
 }
+
+.form-control .ui-inputfield{border: none; /*box-shadow: none;*/ padding-top: 0; padding-bottom: 0; width: 100%;padding-left: 2px;}
+
+.form-control-calendar { width: 100%; }
