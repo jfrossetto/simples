@@ -10,10 +10,10 @@ import javax.inject.Inject;
 import org.omnifaces.util.Messages;
 import org.primefaces.PrimeFaces;
 //import org.primefaces.component.messages.Messages;
-import org.primefaces.context.RequestContext;
+//import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 
-public abstract class AbstractBean implements Serializable {
+public abstract class GenericoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,8 +24,8 @@ public abstract class AbstractBean implements Serializable {
 	    
     @Inject
     private FacesContext facesContext;
-    @Inject
-    private RequestContext requestContext;
+    //@Inject
+    //private RequestContext requestContext;
     @Inject
     private transient PrimeFaces primeContext;
 
@@ -37,7 +37,7 @@ public abstract class AbstractBean implements Serializable {
      * @return o nome do componente default de mensagens da view
      */
     public String getDefaultMessagesComponentId() {
-        return "messages";
+        return "messages"; // "growl"; //
     }
     
     /**

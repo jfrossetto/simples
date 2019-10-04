@@ -22,7 +22,7 @@ import javax.servlet.http.Part;
 import org.hibernate.exception.ConstraintViolationException;
 import org.primefaces.model.UploadedFile;
 
-import br.jfr.simples.bean.AbstractBean;
+import br.jfr.simples.bean.GenericoBean;
 import br.jfr.simples.model.Produto;
 import br.jfr.simples.service.ProdutoServico;
 import br.jfr.simples.util.InternalServiceError;
@@ -30,7 +30,7 @@ import br.jfr.simples.bean.UsuarioLogado;
 
 @Named
 @ViewScoped
-public class ProdutoBean extends AbstractBean implements Serializable {
+public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -130,9 +130,12 @@ public class ProdutoBean extends AbstractBean implements Serializable {
 	}
 
 	@PostConstruct
-    void init() {
-    	logger.info("init ...");
-    	this.produto = new Produto();
+	@Override
+    public void init() {
+		super.init();
+    	logger.info(" ... init produtoBean ...");
+    	servico.initServico();
+    	//this.produto = new Produto();
     }
     
 	public void initializeListing() {
@@ -216,8 +219,9 @@ public class ProdutoBean extends AbstractBean implements Serializable {
     	
         try {
             this.produtoServico.salvar(produto);
-            this.produto = new Produto();
-            this.addInfo(true, "Produto Incluido");
+            this.addInfo(true, "Produto Incluido "+produto.getId());
+            this.viewState = ViewState.EDITING;
+            updateComponent("panel_crud");
         } catch (InternalServiceError ex) {
             this.addError(true, ex.getMessage(), ex.getParameters());
         } catch (Exception ex) {
@@ -246,6 +250,11 @@ public class ProdutoBean extends AbstractBean implements Serializable {
     	
         
     }
+
+	public ProdutoServico getProdutoServico() {
+		return produtoServico;
+	}
+
     
 
 }

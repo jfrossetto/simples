@@ -16,7 +16,7 @@ import br.jfr.simples.service.UsuarioServico;
 
 @Named
 @ViewScoped
-public class LoginBean extends AbstractBean implements Serializable {
+public class LoginBean extends GenericoBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

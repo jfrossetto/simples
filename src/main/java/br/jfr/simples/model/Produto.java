@@ -36,7 +36,6 @@ public class Produto extends Entidade implements Serializable  {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="produto_generator")	
 	private Long id;
 
-	@NotNull
 	@Column(name= "descricao" , length=64, nullable=false )
 	private String descricao;
 	
@@ -54,11 +53,9 @@ public class Produto extends Entidade implements Serializable  {
 	@Column(name= "datafim")
 	private Calendar datafim ;
 	
-	@NotNull
 	@Column(name= "tipo", length=3 , nullable=false)
 	private String tipo ; // 1.produto venda 2.insumo/mat prim 3.intermediario 4.servico .... (usar tablov (tipo_tablov , opcao , descr));
 	
-	@NotNull
 	@Column(name= "categoria", nullable=false)	
 	private String categoria ;
 	
@@ -68,7 +65,6 @@ public class Produto extends Entidade implements Serializable  {
     @Column(name="preco_de",precision=9,scale=2)
 	private BigDecimal preco_de ;
 	
-    @NotNull
     @Column(name="preco",precision=9,scale=2,nullable=false )
 	private BigDecimal preco ;
     

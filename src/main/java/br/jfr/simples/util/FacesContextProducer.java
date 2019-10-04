@@ -5,15 +5,15 @@ import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
+//import org.primefaces.context.RequestContext;
 
 public class FacesContextProducer {
 	
-    @Produces
-    @RequestScoped
-    RequestContext produceRequestContext() {
-        return RequestContext.getCurrentInstance();
-    }
+//    @Produces
+//    @RequestScoped
+//    RequestContext produceRequestContext() {
+//        return RequestContext.getCurrentInstance();
+//    }
 
     /**
      * Produz um contexto valido do {@link FacesContext}
@@ -30,6 +30,5 @@ public class FacesContextProducer {
     PrimeFaces producePrimeContext() {
         return PrimeFaces.current();
     }
-    
 
 }

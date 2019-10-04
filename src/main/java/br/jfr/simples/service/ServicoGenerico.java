@@ -2,15 +2,16 @@ package br.jfr.simples.service;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
@@ -33,6 +34,10 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final Class<T> classe;
+	
+	public void initServico() {
+		logger.info("... initServico() ");
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ServicoGenerico() {
@@ -93,8 +98,13 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 	}
 
 	@Transactional
-	public T salvar(T entidade) {
-		return this.getEntityManager().merge(entidade);
+	public void salvar(T entidade) {
+		this.getEntityManager().persist(entidade);
+	}
+	
+	@Transactional
+	public void atualizar(T entidade) {
+		this.getEntityManager().merge(entidade);
 	}
 	
 	@Transactional
@@ -133,8 +143,14 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 
 	public List<T> carregaRegistros(String sql, Map<String, Object> mapaParam) {
 		EntityManager em = this.getEntityManager();
-		Query query = em.createQuery(sql);
-		mapaParam.forEach( (k,v) -> query.setParameter(k, v) );
+		Query query = em.createQuery(sql); 
+		mapaParam.forEach( (k,v) -> {
+			if( v instanceof Calendar ) {
+				query.setParameter(k, (Calendar) v, TemporalType.TIMESTAMP);
+			} else {
+				query.setParameter(k, v);
+			}
+		} );
 		try {
 			return (List<T>) query.getResultList();
 		} catch (javax.persistence.NoResultException e) {

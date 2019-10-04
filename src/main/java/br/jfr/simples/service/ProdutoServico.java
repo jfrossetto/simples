@@ -36,12 +36,12 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		
 		if( dataini != null ) {
 			sql.append(" and p.datainicio >= :dtini " );
-			mapaParam.put("dtini", dataini.getTime() );
+			mapaParam.put("dtini", dataini );
 		}
 		
 		if( datafim != null ) {
 			sql.append(" and p.datafim < :dtfim " );
-			mapaParam.put("dtfim", datafim.getTime() );
+			mapaParam.put("dtfim", datafim );
 		}
 		
 		if( !(filtro == null || filtro.equals("")) ) {
@@ -84,15 +84,14 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
         return this.buscaPorId(id, false);
     }
 
-
     @Transactional
-    public Produto salvar(Produto produto) {
-    	return super.salvar(produto);
+    public void salvar(Produto produto) {
+    	super.salvar(produto);
     }
-
+    
     @Transactional
-    public Produto atualizaProduto(Produto produto) {
-    	return super.salvar(produto);
+    public void atualizaProduto(Produto produto) {
+    	super.atualizar(produto);
     }
 
 }

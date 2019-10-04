@@ -29,12 +29,15 @@
     </ui:define>
 
 	<ui:define name="conteudo">
-	
-		<h:form id="formCadastro">
+
+		<h:form id="formCadastro" >
+        <h:panelGroup id="panel_crud">
 		
             <div class="row">
                 <div class="col-md-12">
-                    <p:messages id="messages" closable="true" />
+                    <p:messages id="messages"  closable="true">
+                     	<p:autoUpdate/>
+                    </p:messages>
                 </div>
             </div>
 
@@ -54,7 +57,7 @@
 						<h:panelGroup styleClass="form-group col-md-12" rendered="#{produtoBean.produto.id ne null}">
 							<div class="col-xs-6" style="padding: 0px">
 							<h:outputLabel value="Id Produto" for="id" />
-							<p:inputText id="id" immediate="true" styleClass="form-control col-xs-6" 
+							<p:inputText id="id" styleClass="form-control col-xs-6"  
 									 value="#{produtoBean.produto.id}"							
 									 disabled="true"/>
 							</div>
@@ -62,7 +65,7 @@
                     
 						<h:panelGroup styleClass="form-group col-md-8">
 							<h:outputLabel value="Descricao" for="descricao" />
-							<p:inputText id="descricao" immediate="true"
+							<p:inputText id="descricao"  
 							         value="#{produtoBean.produto.descricao}"
 							         required="true" requiredMessage="Descrição deve ser informada" maxlength="64" validatorMessage="Descricao deve ter até 64 caracteres" 
 							         styleClass="form-control"/>
@@ -70,7 +73,7 @@
 						
 						<h:panelGroup styleClass="form-group col-md-4">
 							<h:outputLabel value="Descricao Reduzida" for="descred" />
-							<p:inputText id="descred" immediate="true" 
+							<p:inputText id="descred"  
 							         value="#{produtoBean.produto.desc_reduzida}"
 							         maxlength="32" validatorMessage="Descricao Reduzida deve ter até 32 caracteres" 
 							         styleClass="form-control"/>
@@ -79,7 +82,7 @@
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Val Inicial:" for="datainicio" title="Data inicial em que o produto estará ativo"/>
 							<div class="input-group form-control-calendar ">
-	                  			<p:calendar id="datainicio" immediate="true"
+	                  			<p:calendar id="datainicio" navigator="true"
 	                  						locale="pt"
 	    	              					title="Data inicial em que o produto estará ativo"
             	   		 					value="#{produtoBean.produto.datainicio}"
@@ -92,7 +95,7 @@
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Val Final:" for="datafim" title="Data final em que o produto estará ativo"/>
 							<div class="input-group form-control-calendar ">
-           						<p:calendar id="datafim" immediate="true" navigator="true"
+           						<p:calendar id="datafim" navigator="true"
 	                  						locale="pt"
 	    	              					title="Data final em que o produto estará ativo"
        		 								value="#{produtoBean.produto.datafim}"
@@ -104,21 +107,21 @@
 
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Categoria:" for="categoria" />
-    	    	      		<p:inputText id="categoria" immediate="true"
+    	    	      		<p:inputText id="categoria" 
     	    	      					value="#{produtoBean.produto.categoria}"
         	 		      			 	styleClass="form-control" />
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Tipo:" for="tipo" />
-    	    	      		<p:inputText id="tipo" immediate="true" 
+    	    	      		<p:inputText id="tipo"  
     	    	      					value="#{produtoBean.produto.tipo}"
         	 		      			 	styleClass="form-control" />
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Preco:" for="preco" />
-    	    	      		<p:inputNumber id="preco" immediate="true"
+    	    	      		<p:inputNumber id="preco" 
     	    	      					value="#{produtoBean.produto.preco}"
     	    	      					decimalPlaces="2"
         	 		      			 	 />
@@ -126,7 +129,7 @@
 						
 						<h:panelGroup styleClass="form-group col-md-6">
 							<p:outputLabel value="Preco Old:" for="precode" />
-    	    	      		<p:inputNumber id="precode" immediate="true" 
+    	    	      		<p:inputNumber id="precode"  
     	    	      					value="#{produtoBean.produto.preco_de}"
     	    	      					decimalPlaces="2"
 										 />
@@ -137,7 +140,7 @@
                     <h:panelGroup id="panel_produto_dir" styleClass="col-md-6 col-sm-6 col-xs-6 no-padding">
 						<h:panelGroup styleClass="form-group col-md-12">
 							<p:outputLabel value="Complemento:" for="obscomplemento" />
-    	    	      		<p:inputTextarea id="obscomplemento" immediate="true" 
+    	    	      		<p:inputTextarea id="obscomplemento"  
 												value="#{produtoBean.produto.complemento}"
 												rows="4" maxlength="512"
 												counter="displaycounter" counterTemplate="{0} resta" 
@@ -152,29 +155,32 @@
 				
                 <div class="box-footer align-right">
 
-					<p:commandButton value="Salvar" 
-									 action="#{produtoBean.doSave()}"
+					<p:commandLink value="Salvar" 
+									 actionListener="#{produtoBean.doSave()}"
 									 styleClass="btn btn-flat btn-success"
+									 validateClient="true"
 									 process="formCadastro"
-									 update="formCadastro"
+									 update="panel_crud"
 									 rendered="#{produtoBean.viewState eq 'ADDING'}" />
-					<p:commandButton value="Atualizar" 
-									 action="#{produtoBean.doUpdate()}"
+					<p:commandLink value="Atualizar" 
+									 actionListener="#{produtoBean.doUpdate()}"
 									 styleClass="btn btn-flat btn-success"
+									 validateClient="true"
 									 process="formCadastro"
-									 update="formCadastro"
+									 update="panel_crud"
 									 rendered="#{produtoBean.viewState eq 'EDITING'}" />
 					<p:spacer width="10"/>
-					<p:commandButton immediate="true"
+					<p:commandLink immediate="true"
 					                 value="Voltar" 
 									 action="#{produtoBean.doCancel()}"
 									 styleClass="btn btn-flat btn-default" />
 				</div>
 				
 			</div>
-				
+			
+		</h:panelGroup>	
 		</h:form>
-	
+		
 	</ui:define>
 	
 </ui:composition>

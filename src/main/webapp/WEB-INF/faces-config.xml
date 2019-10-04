@@ -7,8 +7,8 @@
     
 	<application>
 	    <locale-config>
-            <default-locale>pt_br</default-locale>
-            <supported-locale>pt_br</supported-locale>
+            <default-locale>pt</default-locale>
+            <supported-locale>pt</supported-locale>
         </locale-config>
         <message-bundle>messages</message-bundle>
         <resource-bundle>
@@ -29,7 +29,7 @@
             <renderer-class>br.jfr.simples.componente.CustomCalendarRenderer</renderer-class>
         </renderer>
     </render-kit>
-
+  
 	<lifecycle>
 		<phase-listener>br.jfr.simples.util.Autorizador</phase-listener>
 	</lifecycle>
