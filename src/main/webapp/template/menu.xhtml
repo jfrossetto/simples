@@ -15,7 +15,7 @@
         	        
                     <li class="#{activeMenu eq 'Banners' ? 'active' : ''}"
                             jsf:rendered="#{usuarioLogado.temPermissao('Categorias') }" >
-                            <p:link href="listBanners.xhtml">
+                            <p:link href="/simples/pdv/produto.xhtml?faces-redirect=true">
                                 <i class="fa fa-credit-card"></i> 
                                 <span>Categorias</span>
                             </p:link>
@@ -23,7 +23,7 @@
         	        
                     <li class="#{activeMenu eq 'Produtos' ? 'active' : ''}"
                             jsf:rendered="#{usuarioLogado.temPermissao('Produtos') }" >
-                            <p:link href="/simples/pdv/listProduto.xhtml?faces-redirect=true">
+                            <p:link href="/simples/pdv/produto.xhtml?faces-redirect=true">
                                 <i class="fa fa-credit-card"></i> 
                                 <span>Produtos</span>
                             </p:link>

@@ -7,10 +7,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.jfr.simples.bean.GenericoBean.ViewState;
 import br.jfr.simples.model.IEntidade;
 import br.jfr.simples.service.IServicoGenerico;
 import br.jfr.simples.service.ServicoGenerico;
@@ -20,6 +22,9 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	UsuarioLogado usuarioLogado;
+	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	protected ServicoGenerico servico ;
@@ -28,8 +33,24 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 	public void init() {
 		logger.info(" ... init crudBean ... ") ;
 		inicializaServico();
+    	modoListaTabela();
 	}
 	
+	public void modoListaTabela() {
+		logger.info(" ... modoListaTabela() ...");
+        this.viewState = ViewState.LISTING;
+		buscaTabela();
+		executeScript("PF('tabela').unselectAllRows();");
+		updatePanelsConteudo();
+    }
+	
+	public void buscaTabela() {
+	}
+	
+    public String getDefaultMessagesComponentId() {
+        return "formCadastro:messages"; 
+    }
+
 	@SuppressWarnings("rawtypes")
 	public void inicializaServico() {
 		logger.info("... inicializaServico ...");
@@ -68,7 +89,7 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 	}
 	
 	public Field pegaCampoServico(Class bean , Class classeServico ) {
-		logger.info("... pegaCampoServico ...");
+		//logger.info("... pegaCampoServico ...");
 		for( Field f : bean.getDeclaredFields() ) {
 			logger.info(" campo: " + f.getType().getName() );
 			if( f.getType().getName().equals(classeServico.getName()) ) {
@@ -77,5 +98,16 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 		}
 		return null ;	
 	}
+	
 
+	// getters & setters
+	public UsuarioLogado getUsuarioLogado() {
+		return usuarioLogado;
+	}
+	
+	public void setUsuarioLogado(UsuarioLogado usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}
+	
+	
 }

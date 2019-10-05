@@ -177,6 +177,19 @@ public abstract class GenericoBean implements Serializable {
         if (updateDefault) this.updateDefaultMessages();
     }
     
+    public String getTituloView() {
+    	return "generico";
+    }
+    
+    public String getDetalheTituloView() {
+    	return "";
+    }
+    
+    public void updatePanelsConteudo() {
+    	updateComponent("panel_conteudo");
+    	updateComponent("panel_header_conteudo");
+    }
+
     /**
      * Enum para controle do estado de execucao da tela
      */

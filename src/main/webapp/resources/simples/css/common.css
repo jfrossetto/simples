@@ -251,3 +251,7 @@ no-padding {
 .btn-warning.hover {
     background-color: #e08e0b !important;
 }
+
+.margin-btn .btn {
+	margin-left: 10px;
+}

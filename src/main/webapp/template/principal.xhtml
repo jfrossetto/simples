@@ -95,11 +95,13 @@
         </aside>
     	
 		<div class="content-wrapper" id="conteudo">
-        	<section class="content-header">
+			<h:panelGroup id="panel_header_conteudo" layout="block">
+        		<section class="content-header">
                     <h1>
                         <ui:insert name="titulo" />
                         <small><ui:insert name="descricaoPagina" /></small>
                     </h1>
+                    <!-- 
 			        <ol class="breadcrumb">
                         <li>
                             <p:link href="/home.xhtml">
@@ -109,25 +111,40 @@
                         </li>
                         <ui:insert name="breadcrumb" />
                     </ol>
-            </section>
+                    -->
+            	</section>
+            </h:panelGroup>
 			<section class="content">
 				<ui:insert name="conteudo"/>
 			</section>
 		</div>
 		
         <footer class="main-footer">
-                #{msg.by}
-                <ui:insert name="rodape"/>
-                <div class="pull-right hidden-xs">
-                    <strong>#{msg.versao}</strong>
+			<h:panelGroup id="panel_rodape" layout="block">
+	            <div class="row">
+					<div class="col-md-4">
+						<span>#{msg.by}</span>
+					</div>
+					<div class="col-md-4">
+						<p:ajaxStatus>
+						    <f:facet name="start">
+								<h:outputText value="Aguarde ... " style="color:red" />
+    						</f:facet>
+						</p:ajaxStatus>
+					</div>
+					<div class="col-md-4">
+		                <div class="pull-right">
+							<strong>#{msg.versao}</strong>
+                		</div>
+                	</div>
                 </div>
+			</h:panelGroup>
         </footer>
 		
 	 </div>
 	 
-     <ui:insert name="popups" />
+     <ui:insert name="modais" />
 
-        <h:outputScript library="primefaces" name="jquery/jquery.js" />
         <h:outputScript library="primefaces" name="primefaces-locale.js" />
         <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
         <h:outputScript library="adminlte" name="js/adminlte.js"/>
@@ -135,34 +152,9 @@
         <h:outputScript library="minicolors" name="js/jquery.minicolors.js"/>
         <h:outputScript library="simples" name="js/helpers.js"/>
         <h:outputScript library="simples" name="js/wbcharts.js"/>
+        <h:outputScript library="simples" name="js/main.js" />
 
 		<script type ="text/javascript">
-
-			//$(".ui-inputnumber").removeClass();
-			//$(".pinputnumber input:first-child").removeClass().addClass("form-control");
-			
-			 $(function () {
-				$('.input-group.date').datepicker({
-				    format: "dd/mm/yyyy",
-				    language: "pt-BR" ,
-				    autoclose : true
-				});
-			 })
-		
-			function parqueAberto(date){
-				var disabledDays = ["12-24-2017", "12-31-2017"] ;
-			    var enableDays = ["12-27-2017", "12-28-2017", "1-25-2018", "2-12-2018", "2-13-2018" ];
-				var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(), day=date.getDay() ;
-			        if($.inArray( (m+1) + '-' + d + '-' + y,disabledDays) != -1) {
-			            return [false];
-			        }
-			        if($.inArray( (m+1) + '-' + d + '-' + y,enableDays) != -1) {
-			            return [true];
-			        }
-								
-				return [ (day==5 || day==6 || day==0), '']
-			}
-			
 		</script>
 	 
 	</h:body>
