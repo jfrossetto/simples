@@ -65,6 +65,11 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 		produtos = produtoServico.buscaPorFiltro(codigo, filtro, dataini, datafim);
 		return ;	
 	}
+    
+    @Override
+    public boolean podeIncluir() {
+    	return usuarioLogado.temPermissao("R_PRODUTO_NEW");
+    }
 	
     public void modoNovoCadastro() {
         this.viewState = ViewState.ADDING;

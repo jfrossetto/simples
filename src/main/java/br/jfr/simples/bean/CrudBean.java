@@ -50,7 +50,11 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
     public String getDefaultMessagesComponentId() {
         return "formCadastro:messages"; 
     }
-
+    
+    public boolean podeIncluir() {
+    	return true;
+    }
+    
 	@SuppressWarnings("rawtypes")
 	public void inicializaServico() {
 		logger.info("... inicializaServico ...");

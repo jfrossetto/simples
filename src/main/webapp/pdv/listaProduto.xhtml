@@ -97,12 +97,12 @@
 						             
 						<p:ajax event="rowSelect" listener="#{bean.selecionaObj}" />
 						   
-						<p:column>
+						<p:column sortable="true" sortBy="#{produto.id}">
 							<f:facet name="header">id</f:facet>
 							<h:outputText value="#{produto.id}"/>
 						</p:column>
 						
-						<p:column>
+						<p:column sortable="true" sortBy="#{produto.id}" filterable="true" filterBy="#{produto.descricao}"> 
 							<f:facet name="header">Descrição</f:facet>
 							<h:outputText value="#{produto.descricao}"/>
 						</p:column>

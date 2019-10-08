@@ -44,23 +44,64 @@
     	 	</h:panelGroup>
     	
     	 	<h:panelGroup id="panel_form_crud" layout="block" rendered="#{bean.viewState ne 'LISTING'}">
-    	 	
-    	 	 		<h:form id="formCadastro">
-    	 	 		
-			            <div class="row">
-            			    <div class="col-md-12">
-                    			<p:messages id="messages"  closable="true">
-                     				<p:autoUpdate/>
-                    			</p:messages>
-                			</div>
-            			</div>
-    	 	 		
-		    	 		<ui:insert name="formCrud"/>
-		    	 		
-		    	 	</h:form>
-		    	 	
+   	 	 		<h:form id="formCadastro">
+   	 	 		
+		            <div class="row">
+           			    <div class="col-md-12">
+                   			<p:messages id="messages"  closable="true">
+								<p:autoUpdate/>
+                   			</p:messages>
+               			</div>
+           			</div>
+           			
+		            <div class="box">
+		            
+		                <div class="box-header with-border" style="display:flex;" >
+		                	  
+		                	<div class="box-title" jsf:rendered="#{bean.produto.id ne null}">
+								<h:outputText value="Id: #{bean.produto.id}" />
+							</div>
+							 
+	    	            	<div class="margin-btn" style="margin-left: auto;" >
+								<p:commandButton immediate="true"
+					                 value="Voltar"
+					                 type="button"
+					                 icon="fa fa-reply" 
+					                 onclick="voltar()"  
+									 styleClass="btn btn-flat btn-default" />
+								<p:remoteCommand  name="voltar" resetValues="true" actionListener="#{bean.modoListaTabela()}" immediate="true"/>
+        	            	   	<p:commandButton immediate="true"
+                           	           value="Novo"
+                           	           icon="fa fa-plus"
+                           	           resetValues="true"
+                           	           actionListener="#{bean.modoNovoCadastro()}"
+                                   	   styleClass="btn btn-flat btn-info"
+                                   	   rendered="#{bean.podeIncluir() and bean.viewState eq 'EDITING'}" />
+							</div>
+                		</div>
+                		
+		                <h:panelGroup id="panel_cadastro" styleClass="box-body">
+	    	    	 		<ui:insert name="formCrud"/>
+		                </h:panelGroup>
+		                
+						<div class="box-footer align-right margin-btn">
+							<p:commandLink value="Salvar" 
+									 actionListener="#{bean.salvar}"
+									 async="false"
+									 styleClass="btn btn-flat btn-success"
+									 update="panel_conteudo" process="formCadastro"
+									 rendered="#{bean.viewState eq 'ADDING'}" />
+							<p:commandLink value="Atualizar" 
+									 actionListener="#{bean.atualizar}"
+									 async="false"
+									 update="panel_conteudo" process="formCadastro"
+									 styleClass="btn btn-flat btn-success"
+									 rendered="#{bean.viewState eq 'EDITING'}" />
+						</div>
+						
+					</div>
+	    	 	</h:form>
     	 	</h:panelGroup>
-    	 	
     	</h:panelGroup>
 		 	
 	</ui:define>

@@ -8,48 +8,14 @@
 
 <ui:fragment>
 
-        <h:panelGroup id="panel_crud" layout="block">
-
-            <div class="box">
-            
-                <div class="box-header with-border">
-	                <div class="align-right margin-btn">
-						<p:commandButton immediate="true"
-					                 value="Voltar"
-					                 type="button"
-					                 icon="fa fa-reply" 
-					                 onclick="voltar()"  
-									 styleClass="btn btn-flat btn-default" />
-						<p:remoteCommand  name="voltar" resetValues="true" actionListener="#{bean.modoListaTabela()}" immediate="true"/>
-                       	<p:commandButton immediate="true"
-                           	           value="Novo"
-                           	           icon="fa fa-plus"
-                           	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro()}"
-                                   	   styleClass="btn btn-flat btn-info"
-                                   	   rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW') and bean.viewState eq 'EDITING'}" />
-					</div>
-                </div>
-                
-                <h:panelGroup id="panel_produto" styleClass="box-body">
                 
                     <h:panelGroup id="panel_produto_esq" layout="block" 
                     			styleClass="col-md-6 col-sm-6 col-xs-6 no-padding">
                     
-						<h:panelGroup styleClass="form-group col-md-12" layout="block"  
-									rendered="#{produtoBean.produto.id ne null}">
-							<div class="col-xs-6" style="padding: 0px">
-							<h:outputLabel value="Id Produto" for="id" />
-							<p:inputText id="id" styleClass="form-control col-xs-6"  
-									 value="#{produtoBean.produto.id}"							
-									 disabled="true"/>
-							</div>
-						</h:panelGroup>
-                    
 						<h:panelGroup styleClass="form-group col-md-8" layout="block">
 							<h:outputLabel value="Descricao" for="descricao" />
 							<p:inputText id="descricao"  
-							         value="#{produtoBean.produto.descricao}"
+							         value="#{bean.produto.descricao}"
 							         required="true" requiredMessage="Descrição deve ser informada" maxlength="64" validatorMessage="Descricao deve ter até 64 caracteres" 
 							         styleClass="form-control"/>
 						</h:panelGroup>
@@ -57,7 +23,7 @@
 						<h:panelGroup styleClass="form-group col-md-4" layout="block">
 							<h:outputLabel value="Descricao Reduzida" for="descred" />
 							<p:inputText id="descred"  
-							         value="#{produtoBean.produto.desc_reduzida}"
+							         value="#{bean.produto.desc_reduzida}"
 							         maxlength="32" validatorMessage="Descricao Reduzida deve ter até 32 caracteres" 
 							         styleClass="form-control"/>
 						</h:panelGroup>
@@ -68,7 +34,7 @@
 	                  			<p:calendar id="datainicio" navigator="true"
 	                  						locale="pt"
 	    	              					title="Data inicial em que o produto estará ativo"
-            	   		 					value="#{produtoBean.produto.datainicio}"
+            	   		 					value="#{bean.produto.datainicio}"
                 	    	        		mask="true"
                			    				pattern="dd/MM/yyyy"
 											converter="dateCalendarConverter"/>
@@ -81,7 +47,7 @@
            						<p:calendar id="datafim" navigator="true"
 	                  						locale="pt"
 	    	              					title="Data final em que o produto estará ativo"
-       		 								value="#{produtoBean.produto.datafim}"
+       		 								value="#{bean.produto.datafim}"
                     	        			mask="true"
                         		    		pattern="dd/MM/yyyy"
 											converter="dateCalendarConverter"/>
@@ -91,21 +57,21 @@
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Categoria:" for="categoria" />
     	    	      		<p:inputText id="categoria" 
-    	    	      					value="#{produtoBean.produto.categoria}"
+    	    	      					value="#{bean.produto.categoria}"
         	 		      			 	styleClass="form-control" />
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Tipo:" for="tipo" />
     	    	      		<p:inputText id="tipo"  
-    	    	      					value="#{produtoBean.produto.tipo}"
+    	    	      					value="#{bean.produto.tipo}"
         	 		      			 	styleClass="form-control" />
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Preco:" for="preco" />
     	    	      		<p:inputNumber id="preco" 
-    	    	      					value="#{produtoBean.produto.preco}"
+    	    	      					value="#{bean.produto.preco}"
     	    	      					decimalPlaces="2"
         	 		      			 	 />
 						</h:panelGroup>
@@ -113,7 +79,7 @@
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Preco Old:" for="precode" />
     	    	      		<p:inputNumber id="precode"  
-    	    	      					value="#{produtoBean.produto.preco_de}"
+    	    	      					value="#{bean.produto.preco_de}"
     	    	      					decimalPlaces="2"
 										 />
 						</h:panelGroup>
@@ -124,7 +90,7 @@
 						<h:panelGroup styleClass="form-group col-md-12" layout="block">
 							<p:outputLabel value="Complemento:" for="obscomplemento" />
     	    	      		<p:inputTextarea id="obscomplemento"  
-												value="#{produtoBean.produto.complemento}"
+												value="#{bean.produto.complemento}"
 												rows="4" maxlength="512"
 												counter="displaycounter" counterTemplate="{0} resta" 
 												styleClass="form-control" />
@@ -132,27 +98,6 @@
 						</h:panelGroup>
 					</h:panelGroup>
 					
-                </h:panelGroup>
-				
-                <div class="box-footer align-right margin-btn">
-
-					<p:commandLink value="Salvar" 
-									 actionListener="#{produtoBean.salvar}"
-									 styleClass="btn btn-flat btn-success"
-									 update="panel_crud" process="formCadastro"
-									 rendered="#{produtoBean.viewState eq 'ADDING'}" />
-									 
-					<p:commandLink value="Atualizar" 
-									 actionListener="#{bean.atualizar}"
-									 update="panel_crud" process="formCadastro"
-									 styleClass="btn btn-flat btn-success"
-									 rendered="#{produtoBean.viewState eq 'EDITING'}" />
-					
-				</div>
-				
-			</div>
-			
-		</h:panelGroup>
 				
 </ui:fragment>
 
