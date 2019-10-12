@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import br.jfr.simples.model.IEntidade;
+import br.jfr.simples.model.db.IEntidade;
 
 public interface IServicoGenerico<T extends IEntidade, ID extends Serializable> {
 

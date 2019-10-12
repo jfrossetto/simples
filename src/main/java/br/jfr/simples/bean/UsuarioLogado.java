@@ -12,8 +12,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.jfr.simples.model.Permissao;
-import br.jfr.simples.model.Usuario;
+import br.jfr.simples.model.db.Permissao;
+import br.jfr.simples.model.db.Usuario;
 
 //import br.hh.base.model.MAutentica;
 //import br.hh.base.model.MAutoriza;

@@ -17,8 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.bean.GenericoBean.ViewState;
-import br.jfr.simples.model.IEntidade;
-import br.jfr.simples.model.Produto;
+import br.jfr.simples.model.db.IEntidade;
+import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.service.IServicoGenerico;
 import br.jfr.simples.service.ServicoGenerico;
 import br.jfr.simples.util.InternalServiceError;

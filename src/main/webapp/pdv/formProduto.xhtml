@@ -55,13 +55,22 @@
 
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Categoria:" for="categoria" />
-							<p:autoComplete id="categoria"
-											converter="simpleEntityConverter"
-											completeMethod="#{bean.carregaAutoComplete}" 
-    	    	      						value="#{bean.produto.categoria}"
-    	    	      						var="cat" itemLabel="#{cat.id} #{cat.descricao} #{cat.desc_reduzida}" itemValue="#{cat}" forceSelection="true" >
-    	    	      			<f:attribute name="servicoautocomplete" value="categoriaServico" />
-							</p:autoComplete>
+							<div class="input-group"> 
+								<p:autoComplete id="categoria"
+												converter="simpleEntityConverter"
+												completeMethod="#{bean.carregaAutoComplete}" 
+    	    		      						value="#{bean.produto.categoria}"
+    	    		      						var="cat" itemLabel="#{cat.id} #{cat.descricao} #{cat.desc_reduzida}" itemValue="#{cat}" forceSelection="true" >
+    	    	    	  			<f:attribute name="servicoautocomplete" value="categoriaServico" />
+								</p:autoComplete>
+								<div class="input-group-btn input-group-btn-ac">
+			    					<p:commandLink id="btModalBuscaCategoria"
+	    			    		    	         actionListener="#{bean.abrirModalBusca}" 
+												 styleClass="btn btn-flat btn-default">
+										<i class="fa fa-search"/>
+									</p:commandLink>
+								</div>
+							</div>
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">

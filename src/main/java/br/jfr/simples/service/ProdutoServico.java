@@ -15,26 +15,21 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
-import br.jfr.simples.model.Categoria;
-import br.jfr.simples.model.Produto;
-import br.jfr.simples.model.Usuario;
+import br.jfr.simples.model.db.Categoria;
+import br.jfr.simples.model.db.Produto;
+import br.jfr.simples.model.db.Usuario;
 
 @RequestScoped
 public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public List<Produto> buscaPorFiltro(String codigo, String filtro, Calendar dataini, Calendar datafim) {
+	public List<Produto> buscaPorFiltro(String filtro, Calendar dataini, Calendar datafim) {
 		
 		Map<String,Object> mapaParam = new HashMap<>() ;
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("select p from Produto p where 1 = 1 ");
-		
-		if( ! (codigo == null || codigo.equals("") ) ) {
-			sql.append(" and p.id = :id " );
-			mapaParam.put("id", new Long(codigo) );
-		}
 		
 		if( dataini != null ) {
 			sql.append(" and p.datainicio >= :dtini " );
@@ -48,7 +43,7 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		
 		if( !(filtro == null || filtro.equals("")) ) {
 			sql.append(" and ( p.descricao like :filtro ") 
-				.append( "    or p.categoria like :filtro )" );
+				.append( "    or p.categoria.descricao like :filtro )" );
 	    	mapaParam.put("filtro", "%"+filtro+"%" );
 	    		
 		}

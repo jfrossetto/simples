@@ -9,54 +9,18 @@
 
 <ui:fragment>
 	
-		<div class="box">
-
-    	 	<h:panelGroup id="panel_filtroTabela" 
-    	 				layout="block" 
-    	 				styleClass="box-header with-border">
-    	 				
-                    <div class="row">
-      	            	<div class="col-md-8">
-      	            	<h:panelGroup styleClass="form-group form-control-calendar">
-      	            		<div class="col-md-2">
-			            		<p:calendar id="fdataini" 
-    	           		 				value="#{produtoBean.dataini}"
-        	            	        	mask="true"
-            	            		    pattern="dd/MM/yyyy"
-										converter="dateCalendarConverter">
-								</p:calendar>
-							</div>
-						</h:panelGroup>
-      	            	<h:panelGroup styleClass="form-group form-control-calendar">
-      	            		<div class="col-md-2">
-		            		<p:calendar id="fdatafim" 
-               		 				value="#{produtoBean.datafim}"
-                    	        	mask="true"
-                        		    pattern="dd/MM/yyyy"
-									converter="dateCalendarConverter">
-							</p:calendar>
-							</div>
-						</h:panelGroup>
-      	            	<h:panelGroup styleClass="form-group">
-      	            		<div class="col-md-3">
-								<p:inputText  id="id_ped" 
-											  styleClass="form-control"
-								              value="#{produtoBean.codigo}" 
-								              placeholder="id produto, cod oracle" >
-								</p:inputText>
-							</div>
-						</h:panelGroup>
-      	            	<h:panelGroup styleClass="form-group">
-      	            		<div class="col-md-3">
-								<p:inputText  id="filtro"
+	<div class="box">
+		<h:form id="form_filtro_tabela">
+			<h:panelGroup id="panel_filtroTabela"  styleClass="box-header with-border" style="display:flex;" layout="block">
+					<p:defaultCommand target="btBusca"/>
+					<div class="col-md-6 no-padding">
+						<div class="input-group">
+							<p:inputText  id="filtro"
 										    styleClass="form-control" 
 								            value="#{produtoBean.filtro}" 
 								            placeholder="descricao , categoria" >
-								</p:inputText>
-							</div>
-						</h:panelGroup>
-      	            	<h:panelGroup styleClass="form-group">
-      	            		<div class="col-md-2">
+							</p:inputText>
+							<div class="input-group-btn">
 			    				<p:commandLink id="btBusca"
 	    			    		             actionListener="#{bean.buscaTabela()}" 
 	    			            		     update="panel_tabela"
@@ -64,22 +28,68 @@
 									<i class="fa fa-search"/>
 								</p:commandLink>
 							</div>
-						</h:panelGroup>
 						</div>
+					</div>
+   	            	<div class="margin-btn" style="margin-left: auto;" >
+   	            		<p:commandButton id="filtroAvancado"
+   	            		               immediate="true"
+                           	           value="Filtro"
+                           	           icon="fa fa-filter"
+                           	           resetValues="true"
+                           	           my="right top"
+                           	           at="right bottom"
+                                   	   styleClass="btn btn-flat btn-default"
+                                   	   />
+   	            	    <p:overlayPanel id="panel_filtroAvancado" 
+   	            	                    for="filtroAvancado"
+   	            	                    style="width:400px; height: auto;" 
+   	            	                    showEffect="slide" hideEffect="slide" 
+   	            	                    dynamic="true"
+                    					dismissable="false" showCloseIcon="true">
 
-						<div class="col-md-4">
-							<div class="box-tools pull-right">
-                       			<p:commandButton immediate="true"
+    	 					<h:panelGroup layout="block">
+    					 		<div class="box-body">
+									<h:panelGroup styleClass="form-group col-md-6" layout="block">
+										<p:outputLabel value="Val Inicial:" for="fdataini" title="Data inicial em que o produto estará ativo"/>
+										<div class="input-group form-control-calendar ">
+			            					<p:calendar id="fdataini" 
+    	           		 								value="#{produtoBean.dataini}"
+        	            	        					mask="true"
+            	            		    				pattern="dd/MM/yyyy"
+														converter="dateCalendarConverter">
+											</p:calendar>
+										</div>
+									</h:panelGroup>
+									<h:panelGroup styleClass="form-group col-md-6" layout="block">
+										<p:outputLabel value="Val Inicial:" for="fdatafim" title="Data final em que o produto estará ativo"/>
+										<div class="input-group form-control-calendar ">
+			            					<p:calendar id="fdatafim" 
+               		 									value="#{produtoBean.datafim}"
+                    	        						mask="true"
+                        		    					pattern="dd/MM/yyyy"
+														converter="dateCalendarConverter">
+											</p:calendar>
+										</div>
+									</h:panelGroup>
+								</div>
+								<div class="box-footer align-right margin-btn">
+									<p:commandLink value="Aplicar"
+  	    			    		                   actionListener="#{bean.buscaTabela()}" 
+  	    			    		                   onclick="$('.ui-overlaypanel-close').click();"
+	    			            		           update="panel_tabela"
+											       styleClass="btn btn-flat btn-warning"/>
+  								</div>	
+							</h:panelGroup>
+					    </p:overlayPanel>
+					        
+						<p:commandButton immediate="true"
                            	           value="Novo"
                            	           icon="fa fa-plus"
                            	           resetValues="true"
                            	           actionListener="#{bean.modoNovoCadastro}"
                                    	   styleClass="btn btn-flat btn-info"
                                    	   rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW')}" />
-                            </div> 
-			    		</div>
 			    	</div>
-				
 			</h:panelGroup>
  				    
     	 	<h:panelGroup id="panel_tabela" 
@@ -170,7 +180,8 @@
 					
 			</h:panelGroup>
 			
-		</div>
+		</h:form>		
+	</div>
 	
 </ui:fragment>
 

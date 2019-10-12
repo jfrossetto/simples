@@ -13,8 +13,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import br.jfr.simples.model.Permissao;
-import br.jfr.simples.model.Usuario;
+import br.jfr.simples.model.db.Permissao;
+import br.jfr.simples.model.db.Usuario;
 
 @ApplicationScoped
 public class UsuarioServico extends ServicoGenerico<Usuario, Long> implements Serializable {

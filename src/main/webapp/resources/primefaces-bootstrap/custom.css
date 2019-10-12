@@ -13,6 +13,16 @@
 }
 */
 
+.ui-autocomplete {
+	width: 100% !important;
+}
+
+/*
+.ui-button-text {
+	padding: .3em
+}
+*/
+
 /* customizacao da apreentacao do texto dos botoes */
 .ui-button {
     height: 34px;
@@ -20,11 +30,11 @@
 
 /* remove todos os efeitos arredondadinhos dos elementos */
 .ui-corner-all, .ui-state-default {
-    border-radius: 0 !important;
+    border-radius: 4px !important;
 }
 
 .ui-selectonemenu-trigger {
-    border-radius: 0 !important;
+    border-radius: 4px !important;
 }
 
 /* tira aquele fundo vermelho do label na hr da validacao */

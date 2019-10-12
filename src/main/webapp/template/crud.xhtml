@@ -34,17 +34,16 @@
 	-->
 	
     <ui:define name="modais">
-		<ui:include src="../template/modal/modalAviso.xhtml"/>
+		<ui:include src="../template/modal/modalAvisoConf.xhtml"/>
+		<ui:include src="../template/modal/modalBusca.xhtml"/>
+		
 	</ui:define>	
 	
 	<ui:define name="conteudo">
     	<h:panelGroup id="panel_conteudo" layout="block">
     	
     	 	<h:panelGroup id="panel_lista_tabela" layout="block" rendered="#{bean.viewState eq 'LISTING'}">
-    	 	 		<h:form id="form_filtro_tabela">
-   	 			    	<p:defaultCommand target="btBusca"/>
-		    	 		<ui:insert name="listaTabela"/>
-					</h:form>		    	 		
+    	 		<ui:insert name="listaTabela"/>
     	 	</h:panelGroup>
     	
     	 	<h:panelGroup id="panel_form_crud" layout="block" rendered="#{bean.viewState ne 'LISTING'}">

@@ -1,10 +1,13 @@
 package br.jfr.simples.bean;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import org.omnifaces.util.Messages;
@@ -13,9 +16,15 @@ import org.primefaces.PrimeFaces;
 //import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 
+import br.jfr.simples.model.bean.ModalAvisoConf;
+import br.jfr.simples.model.bean.ModalBusca;
+
 public abstract class GenericoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private final String MODAL_AVISO_CONF = "ModalAvisoConf";
+	private final String MODAL_BUSCA = "ModalBusca";
 	
 	protected ViewState viewState;
 
@@ -28,7 +37,9 @@ public abstract class GenericoBean implements Serializable {
     //private RequestContext requestContext;
     @Inject
     protected transient PrimeFaces primeContext;
-
+    
+    protected String classeModal ;
+    
     public ViewState getViewState() {
 		return viewState;
 	}
@@ -189,15 +200,65 @@ public abstract class GenericoBean implements Serializable {
     	updateComponent("panel_conteudo");
     	updateComponent("panel_header_conteudo");
     }
-
     
+    public void abrirModalBusca(ActionEvent ev) {
+    	classeModal = MODAL_BUSCA;
+    	
+    	ModalBusca modalBusca = new ModalBusca()
+    								.setTitulo("Busca Categoria")
+    								.setUrlLista("/pdv/listaProduto.xhtml");
+    	
+    	
+    	ExternalContext externalContext = facesContext.getExternalContext();
+    	Map<String, Object> sessionMap = externalContext.getSessionMap();
+    	sessionMap.put(classeModal, modalBusca);
+    	
+    	updateComponent("form_modalBusca");
+    	abrirModal(classeModal);
+    	
+    }
+    
+    public void abrirModalAvisoConf(ModalAvisoConf modal) {
+    	classeModal = MODAL_AVISO_CONF;
+    	ExternalContext externalContext = facesContext.getExternalContext();
+    	Map<String, Object> sessionMap = externalContext.getSessionMap();
+    	sessionMap.put(classeModal, modal);
+    	
+    	updateComponent("form_modalAviso");
+    	abrirModal(classeModal);
+    }
+    
+    public ModalAvisoConf pegaModalAvisoConf() {
+    	classeModal = MODAL_AVISO_CONF;
+    	ExternalContext externalContext = facesContext.getExternalContext();
+    	Map<String, Object> sessionMap = externalContext.getSessionMap();
+    	return (ModalAvisoConf) sessionMap.get(classeModal); 
+    }
     
     public void abrirModal(String modal) {
     	executeJS("abrirModal('" + modal + "')");
     }
     
     public void fecharModal(String modal) {
+    	logger.info(" ... fecharModal ... ");
     	executeJS("fecharModal('" + modal + "')");
+    	if( classeModal != null && !classeModal.isEmpty() ) {
+        	ExternalContext externalContext = facesContext.getExternalContext();
+        	Map<String, Object> sessionMap = externalContext.getSessionMap();
+        	sessionMap.remove(classeModal);
+        	classeModal = null;
+    	}
+    }
+    
+    public void modalAvisoConfBtn1() {
+    	logger.info(" ... modalAvisoConfBtn1() ... ");
+    }
+    
+    public void modalAvisoConfBtn2() {
+    	logger.info(" ... modalAvisoConfBtn2() ... ");
+    }
+    public void modalAvisoConfBtn3() {
+    	logger.info(" ... modalAvisoConfBtn3() ... ");
     }
     
     /**

@@ -15,8 +15,8 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
-import br.jfr.simples.model.Categoria;
-import br.jfr.simples.model.Usuario;
+import br.jfr.simples.model.db.Categoria;
+import br.jfr.simples.model.db.Usuario;
 
 @RequestScoped
 public class CategoriaServico extends ServicoGenerico<Categoria, Long> implements Serializable {

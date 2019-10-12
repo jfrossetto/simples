@@ -1,4 +1,4 @@
-package br.jfr.simples.model;
+package br.jfr.simples.model.db;
 
 import java.io.Serializable;
 import java.util.Calendar;

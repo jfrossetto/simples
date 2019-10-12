@@ -10,8 +10,8 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 
-import br.jfr.simples.model.Permissao;
-import br.jfr.simples.model.Usuario;
+import br.jfr.simples.model.db.Permissao;
+import br.jfr.simples.model.db.Usuario;
 import br.jfr.simples.service.UsuarioServico;
 
 @Named

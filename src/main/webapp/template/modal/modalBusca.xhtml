@@ -6,20 +6,17 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core">
 
-    <div id="modalAviso" class="modal fade">
-        <div class="modal-dialog modal-md modal-dialog-centered">
+    <div id="ModalBusca" class="modal fade">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
             
                 <script>
-                    $('#modalAviso').on('shown.bs.modal', function () {
-                        jQuery('.btn-ok').focus();
-                    });
                     $('#modalAviso').on('hidden.bs.modal', function () {
                         fechar_modal();
                     });
                 </script>
                   
-                <h:form id="form_modalAviso">
+                <h:form id="form_modalBusca">
                  
                     <div class="modal-header">
                         <button class="close" onclick="fechar_modal()" data-dismiss="modal" type="button">
@@ -27,20 +24,17 @@
                             <span class="sr-only">Fechar</span>
                         </button>
                         <h4 class="modal-title">
-                            Titulo Modal
+                            #{sessionScope['ModalBusca'].titulo}
                         </h4>
                     </div>
                     
                     <div class="modal-body">
-                         <h:panelGroup layout="block" style="margin: 5px 0 10px; word-wrap: break-word" >
-                            <h:outputText id="texto_aviso" value="#{bean.msgModalAviso}" escape="false" />
+                         <h:panelGroup layout="block">
+                            <ui:include src="#{sessionScope['ModalBusca'].urlLista}"/>
                          </h:panelGroup>
                     </div>
                     
                     <div class="modal-footer">
-                        <p:commandButton styleClass="btn-ok btn-less-padding btn btn-primary pull-right internal-link"
-                                         ajax="false"
-                                         value="#{msg.ok}" />
                         <p:remoteCommand name="fechar_modal" immediate="true" global="false" actionListener="#{bean.fecharModal}" />
                     </div>
                          

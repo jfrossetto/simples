@@ -21,7 +21,7 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.jfr.simples.model.IEntidade;
+import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.util.Utils;
 

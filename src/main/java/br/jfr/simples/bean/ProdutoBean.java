@@ -23,8 +23,9 @@ import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
-import br.jfr.simples.model.Categoria;
-import br.jfr.simples.model.Produto;
+import br.jfr.simples.model.bean.ModalAvisoConf;
+import br.jfr.simples.model.db.Categoria;
+import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.service.CategoriaServico;
 import br.jfr.simples.service.ProdutoServico;
 import br.jfr.simples.service.ServicoGenerico;
@@ -45,9 +46,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	
 	private Calendar dataini;
 	private Calendar datafim;
-
 	private String filtro ; 
-	private String codigo ;
 	
     @Inject
     private ProdutoServico produtoServico;
@@ -70,7 +69,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	
     @Override
 	public void buscaTabela() {
-		produtos = produtoServico.buscaPorFiltro(codigo, filtro, dataini, datafim);
+		produtos = produtoServico.buscaPorFiltro(filtro, dataini, datafim);
 		return ;	
 	}
     
@@ -140,18 +139,32 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 
     @Override
     public void atualizar(ActionEvent ev) {
-    	setMsgModalAviso("Produto: "+produto.getDescricao()+" Atualizado! ");
-    	updateComponent("form_modalAviso");
-    	abrirModal("modalAviso");
+    	abrirModalAvisoConf( new ModalAvisoConf()
+    			                  .setTitulo("Atualizado")
+    			                  .setMsgCorpo("Produto: "+produto.getDescricao()+" Atualizado! ")
+    			                  .setBtn2(true)
+    			                  .setBtn2Label("Fechar")
+    			                  .setBtn2Classe("btn-default")
+    						);
     	super.atualizar(ev);
     }
     
     @Override
+    public void modalAvisoConfBtn2() {
+    	logger.info(" ... modalAvisoConfBtn2() ... ");
+    	if(  pegaModalAvisoConf() != null && pegaModalAvisoConf().getTitulo().equals("Confirma Exclusão") ) {
+    		logger.info(" ... excluindo sqn ... ");
+    		//super.excluir(null);
+    	}
+    }
+    
+    @Override
     public void excluir(ActionEvent ev) {
-    	setMsgModalAviso("Produto: "+produto.getDescricao()+" Excluido! ");
-    	updateComponent("form_modalAviso");
-    	abrirModal("modalAviso");
-    	super.excluir(ev);
+    	abrirModalAvisoConf( new ModalAvisoConf()
+                .setTitulo("Confirma Exclusão")
+                .setMsgCorpo("Produto: "+produto.getDescricao() )
+                .setSimNao()
+			);
     }
 
     
@@ -228,30 +241,12 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 		this.filtro = filtro;
 	}
 
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
 	public Part getImgPsp() {
 		return imgPsp;
 	}
 
 	public void setImgPsp(Part imgPsp) {
 		this.imgPsp = imgPsp;
-	}
-	
-	private String msgModalAviso;
-
-	public String getMsgModalAviso() {
-		return msgModalAviso;
-	}
-
-	public void setMsgModalAviso(String msgModalAviso) {
-		this.msgModalAviso = msgModalAviso;
 	}
 	
 }

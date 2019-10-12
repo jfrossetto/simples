@@ -1,0 +1,71 @@
+<ui:fragment
+
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <div id="ModalAvisoConf" class="modal fade">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+            
+                <script>
+                    $('#modalAviso').on('shown.bs.modal', function () {
+                        jQuery('.btn-1').focus();
+                    });
+                    $('#modalAviso').on('hidden.bs.modal', function () {
+                        fechar_modal();
+                    });
+                </script>
+                  
+                <h:form id="form_modalAviso">
+                 
+                    <div class="modal-header">
+                        <button class="close" onclick="fechar_modal()" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">Fechar</span>
+                        </button>
+                        <h4 class="modal-title">
+                            #{sessionScope['ModalAvisoConf'].titulo}
+                        </h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                         <h:panelGroup layout="block" style="margin: 5px 0 10px; word-wrap: break-word" >
+                            <h:outputText id="texto_aviso" value="#{sessionScope['ModalAvisoConf'].msgCorpo}" escape="false" />
+                         </h:panelGroup>
+                    </div>
+                    
+                    <div class="modal-footer">
+                    	<h:panelGroup layout="block" rendered="#{sessionScope['ModalAvisoConf'].btn3}">
+                        	<p:commandLink styleClass="btn #{sessionScope['ModalAvisoConf'].btn3Classe}"
+                            	             ajax="false"
+                                	         actionListener="#{bean.modalAvisoConfBtn3()}"
+                                    	     oncomplete="fechar_modal()"
+                                        	 value="#{sessionScope['ModalAvisoConf'].btn3Label}" />
+						</h:panelGroup>
+                    	<h:panelGroup layout="block" rendered="#{sessionScope['ModalAvisoConf'].btn2}">
+                        	<p:commandLink styleClass="btn #{sessionScope['ModalAvisoConf'].btn2Classe}"
+                            	             ajax="false"
+                                	         actionListener="#{bean.modalAvisoConfBtn2()}"
+                                    	     oncomplete="fechar_modal()"
+                                        	 value="#{sessionScope['ModalAvisoConf'].btn2Label}" />
+						</h:panelGroup>
+                    	<h:panelGroup layout="block" rendered="#{sessionScope['ModalAvisoConf'].btn1}">
+                        	<p:commandLink styleClass="btn-1 btn #{sessionScope['ModalAvisoConf'].btn1Classe}"
+                            	             ajax="false"
+                                	         actionListener="#{bean.modalAvisoConfBtn1()}"
+                                    	     oncomplete="fechar_modal()"
+                                        	 value="#{sessionScope['ModalAvisoConf'].btn1Label}" />
+						</h:panelGroup>
+						
+                        <p:remoteCommand name="fechar_modal" immediate="true" global="false" actionListener="#{bean.fecharModal}" />
+                    </div>
+                         
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+</ui:fragment>

@@ -256,6 +256,10 @@ no-padding {
 	margin-left: 10px;
 }
 
-.ui-autocomplete {
-	width: 100% !important;
+.no-padding {
+	padding-left: 0px ;
+}
+
+.input-group-btn-ac {
+	vertical-align: top !important;
 }
