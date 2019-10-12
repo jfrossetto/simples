@@ -23,11 +23,11 @@ public abstract class GenericoBean implements Serializable {
     protected Logger logger;
 	    
     @Inject
-    private FacesContext facesContext;
+    protected FacesContext facesContext;
     //@Inject
     //private RequestContext requestContext;
     @Inject
-    private transient PrimeFaces primeContext;
+    protected transient PrimeFaces primeContext;
 
     public ViewState getViewState() {
 		return viewState;
@@ -67,7 +67,7 @@ public abstract class GenericoBean implements Serializable {
      *
      * @param script o script a ser executado
      */
-    protected void executeScript(String script) {
+    protected void executeJS(String script) {
         //this.requestContext.execute(script);
     	primeContext.executeScript(script);
     }
@@ -78,7 +78,7 @@ public abstract class GenericoBean implements Serializable {
      * @param widgetVar o widgetvar para abri-la
      */
     protected void openDialog(String widgetVar) {
-        this.executeScript("PF('" + widgetVar + "').show()");
+        this.executeJS("PF('" + widgetVar + "').show()");
     }
     
     /**
@@ -89,7 +89,7 @@ public abstract class GenericoBean implements Serializable {
      */
     protected void updateAndOpenDialog(String id, String widgetVar) {
         this.updateComponent(id);
-        this.executeScript("PF('" + widgetVar + "').show()");
+        this.executeJS("PF('" + widgetVar + "').show()");
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class GenericoBean implements Serializable {
      * @param widgetVar o widgetvar da dialog
      */
     protected void closeDialog(String widgetVar) {
-        this.executeScript("PF('" + widgetVar + "').hide()");
+        this.executeJS("PF('" + widgetVar + "').hide()");
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class GenericoBean implements Serializable {
      */
     protected void temporizeHiding(String componentId) {
         this.updateComponent(componentId);
-        this.executeScript("setTimeout(\"$(\'#" + componentId + "\').slideUp(300)\", 5000)");
+        this.executeJS("setTimeout(\"$(\'#" + componentId + "\').slideUp(300)\", 5000)");
     }
 
     /**
@@ -190,6 +190,16 @@ public abstract class GenericoBean implements Serializable {
     	updateComponent("panel_header_conteudo");
     }
 
+    
+    
+    public void abrirModal(String modal) {
+    	executeJS("abrirModal('" + modal + "')");
+    }
+    
+    public void fecharModal(String modal) {
+    	executeJS("fecharModal('" + modal + "')");
+    }
+    
     /**
      * Enum para controle do estado de execucao da tela
      */

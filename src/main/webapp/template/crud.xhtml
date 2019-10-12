@@ -32,7 +32,11 @@
         <li class="active"><a href="#">#{bean.tituloView}</a></li>
     </ui:define>
 	-->
-		
+	
+    <ui:define name="modais">
+		<ui:include src="../template/modal/modalAviso.xhtml"/>
+	</ui:define>	
+	
 	<ui:define name="conteudo">
     	<h:panelGroup id="panel_conteudo" layout="block">
     	
@@ -58,8 +62,8 @@
 		            
 		                <div class="box-header with-border" style="display:flex;" >
 		                	  
-		                	<div class="box-title" jsf:rendered="#{bean.produto.id ne null}">
-								<h:outputText value="Id: #{bean.produto.id}" />
+		                	<div class="box-title" jsf:rendered="#{bean.objPrincipal.id ne null}">
+								<h:outputText value="Id: #{bean.objPrincipal.id}" />
 							</div>
 							 
 	    	            	<div class="margin-btn" style="margin-left: auto;" >
@@ -74,7 +78,7 @@
                            	           value="Novo"
                            	           icon="fa fa-plus"
                            	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro()}"
+                           	           actionListener="#{bean.modoNovoCadastro}"
                                    	   styleClass="btn btn-flat btn-info"
                                    	   rendered="#{bean.podeIncluir() and bean.viewState eq 'EDITING'}" />
 							</div>
@@ -97,6 +101,13 @@
 									 update="panel_conteudo" process="formCadastro"
 									 styleClass="btn btn-flat btn-success"
 									 rendered="#{bean.viewState eq 'EDITING'}" />
+							<p:commandLink value="Excluir" 
+									 actionListener="#{bean.excluir}"
+									 async="false"
+									 update="panel_conteudo" process="formCadastro"
+									 styleClass="btn btn-flat btn-warning"
+									 rendered="#{bean.viewState eq 'EDITING'}" />
+									 
 						</div>
 						
 					</div>

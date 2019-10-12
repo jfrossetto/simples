@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIViewRoot;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -18,12 +19,17 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
+import br.jfr.simples.model.Categoria;
 import br.jfr.simples.model.Produto;
+import br.jfr.simples.service.CategoriaServico;
 import br.jfr.simples.service.ProdutoServico;
+import br.jfr.simples.service.ServicoGenerico;
 import br.jfr.simples.util.InternalServiceError;
+import br.jfr.simples.util.Utils;
 
 @Named
 @ViewScoped
@@ -45,6 +51,8 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	
     @Inject
     private ProdutoServico produtoServico;
+    @Inject 
+    private CategoriaServico categoriaServico;
     
 	@PostConstruct
 	@Override
@@ -70,21 +78,23 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
     public boolean podeIncluir() {
     	return usuarioLogado.temPermissao("R_PRODUTO_NEW");
     }
-	
+
+    /*
+    @Override
     public void modoNovoCadastro() {
-        this.viewState = ViewState.ADDING;
-        this.produto = new Produto();
-        updatePanelsConteudo();
+    	super.modoNovoCadastro();
     }
     
     public void modoEdicao() {
         this.viewState = ViewState.EDITING;
         updatePanelsConteudo();
     }
+    */
 	
 	public void selecionaObj(SelectEvent event) {
 		produto = (Produto) event.getObject();
 		modoEdicao();
+		logger.info( " teste pegaOjetoCampo2: " + Utils.pegaObjetoCampo2(this, "produto.categoria.descricao") );
 	}
 	
     public void showUpload(Long id) {
@@ -113,6 +123,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
         this.closeDialog("dialogImgProduto");
     }
 
+    /*
     public void salvar(ActionEvent ev) {
         try {
             produtoServico.salvar(produto);
@@ -125,23 +136,24 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
             addError(true, "erro java ", ex.getMessage());
         }
     }
+    */
 
+    @Override
     public void atualizar(ActionEvent ev) {
-		logger.info(" ... atualizar ...");
-        try {
-            produtoServico.atualizaProduto(produto);
-            addInfo(true, "Produto Atualizado !");
-            logger.info("produto atualizado: " + produto.getDescricao() );
-        } catch (InternalServiceError ex) {
-            addError(true, ex.getMessage(), ex.getParameters());
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            addError(true, "erro java ", ex.getMessage());
-        }
+    	setMsgModalAviso("Produto: "+produto.getDescricao()+" Atualizado! ");
+    	updateComponent("form_modalAviso");
+    	abrirModal("modalAviso");
+    	super.atualizar(ev);
+    }
+    
+    @Override
+    public void excluir(ActionEvent ev) {
+    	setMsgModalAviso("Produto: "+produto.getDescricao()+" Excluido! ");
+    	updateComponent("form_modalAviso");
+    	abrirModal("modalAviso");
+    	super.excluir(ev);
     }
 
-    public void excluir(ActionEvent ev) {
-    }
     
 	public void checkProd(javax.faces.event.AjaxBehaviorEvent event) {
 	}
@@ -151,6 +163,10 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 		return produtoServico;
 	}
 	
+	public CategoriaServico getCategoriaServico() {
+		return categoriaServico;
+	}
+
 	@Override
     public String getTituloView() {
     	return "Produto";
@@ -227,5 +243,15 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	public void setImgPsp(Part imgPsp) {
 		this.imgPsp = imgPsp;
 	}
+	
+	private String msgModalAviso;
 
+	public String getMsgModalAviso() {
+		return msgModalAviso;
+	}
+
+	public void setMsgModalAviso(String msgModalAviso) {
+		this.msgModalAviso = msgModalAviso;
+	}
+	
 }

@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.model.IEntidade;
 import br.jfr.simples.util.InternalServiceError;
+import br.jfr.simples.util.Utils;
 
 public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializable> extends ServicoUtils implements IServicoGenerico<T, ID>, Serializable {
 
@@ -43,12 +44,12 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 	public ServicoGenerico() {
 		logger.info( this.getClass().getName() );
 		logger.info( this.getClass().getSuperclass().getName() );
-		ParameterizedType parameterizedType = pegaParameterizedType(this.getClass());
+		ParameterizedType parameterizedType = Utils.pegaParameterizedType(this.getClass());
 		if( parameterizedType == null ) {
 			throw new InternalServiceError("nao e uma classe generica");
 		}
 		this.classe = (Class<T>) parameterizedType.getActualTypeArguments()[0];
-		logger.info( classe.getName() );
+		logger.info( "entidade: " + classe.getName() );
 	}
 	
 	protected EntityManager getEntityManager() {
@@ -88,6 +89,12 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
         }
 		return entity;
 	}
+	
+	public List<T> buscaAutoComplete(String filtro) {
+		// implementar genérico 
+		return null;
+	}
+	
 
 	public Long count() {
 		EntityManager em = this.getEntityManager() ;
@@ -96,6 +103,11 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
         query.select(builder.count(query.from(this.getClasse()) ));
         return em.createQuery(query).getSingleResult();
 	}
+	
+	// configura valores inciais para o objeto
+    public void valoresIniciais(T entity) {
+    	
+    };
 
 	@Transactional
 	public void salvar(T entidade) {

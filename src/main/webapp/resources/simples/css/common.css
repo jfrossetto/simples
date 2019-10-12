@@ -255,3 +255,7 @@ no-padding {
 .margin-btn .btn {
 	margin-left: 10px;
 }
+
+.ui-autocomplete {
+	width: 100% !important;
+}

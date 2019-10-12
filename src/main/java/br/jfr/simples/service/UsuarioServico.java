@@ -46,6 +46,6 @@ public class UsuarioServico extends ServicoGenerico<Usuario, Long> implements Se
 		} 
 		return permissoes;
 	}
-	
+
 
 }

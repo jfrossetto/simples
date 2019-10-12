@@ -2,6 +2,7 @@ package br.jfr.simples.service;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
+import br.jfr.simples.model.Categoria;
 import br.jfr.simples.model.Produto;
 import br.jfr.simples.model.Usuario;
 
@@ -57,6 +59,22 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		
 	}
 
+	public List<Produto> buscaAutoComplete(String filtro) {
+		
+		Map<String,Object> mapaParam = new HashMap<>() ;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select p from Produto c where 1 = 1 ");
+		
+		if( filtro != null ) {
+			sql.append(" and ( p.descricao like :filtro ) ") ; 
+	    	mapaParam.put("filtro", "%" + filtro.trim() + "%" );
+		}
+		sql.append(" order by p.id desc ");						
+		
+		return carregaRegistros(sql.toString(), mapaParam);
+		
+	}
 	
 	public List<Produto> buscaPorCat(String cat) {
 		
@@ -75,7 +93,6 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		
 	}
 	
-	
     public List<Produto> listProdutos() {
         return buscaTodos();
     }
@@ -83,6 +100,11 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
     public Produto findById(Long id) {
         return this.buscaPorId(id, false);
     }
+    
+    public void valoresIniciais(Produto produto) {
+    	produto.setDatainicio( Calendar.getInstance() );
+    };
+
 
     @Transactional
     public void salvar(Produto produto) {
@@ -90,7 +112,7 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
     }
     
     @Transactional
-    public void atualizaProduto(Produto produto) {
+    public void atualizar(Produto produto) {
     	super.atualizar(produto);
     }
 

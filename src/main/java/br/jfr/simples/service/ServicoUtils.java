@@ -13,16 +13,6 @@ import org.slf4j.Logger;
 
 public abstract class ServicoUtils implements IServicoUtils {
 	
-	public ParameterizedType pegaParameterizedType(Class classe) {
-		if( classe == null ) {
-			return null ;
-		} else if( classe.getGenericSuperclass() instanceof ParameterizedType ) {
-			return (ParameterizedType) classe.getGenericSuperclass()  ;
-		} else {
-			return pegaParameterizedType(classe.getSuperclass());
-		}
-	}
-	
 	public String retornaMD5(String str) {
 		MessageDigest m;
 		try {

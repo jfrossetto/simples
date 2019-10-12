@@ -7,7 +7,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:fragment>
-
                 
                     <h:panelGroup id="panel_produto_esq" layout="block" 
                     			styleClass="col-md-6 col-sm-6 col-xs-6 no-padding">
@@ -56,9 +55,13 @@
 
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">
 							<p:outputLabel value="Categoria:" for="categoria" />
-    	    	      		<p:inputText id="categoria" 
-    	    	      					value="#{bean.produto.categoria}"
-        	 		      			 	styleClass="form-control" />
+							<p:autoComplete id="categoria"
+											converter="simpleEntityConverter"
+											completeMethod="#{bean.carregaAutoComplete}" 
+    	    	      						value="#{bean.produto.categoria}"
+    	    	      						var="cat" itemLabel="#{cat.id} #{cat.descricao} #{cat.desc_reduzida}" itemValue="#{cat}" forceSelection="true" >
+    	    	      			<f:attribute name="servicoautocomplete" value="categoriaServico" />
+							</p:autoComplete>
 						</h:panelGroup>
 						
 						<h:panelGroup styleClass="form-group col-md-6" layout="block">

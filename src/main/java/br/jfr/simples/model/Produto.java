@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -56,8 +58,9 @@ public class Produto extends Entidade implements Serializable  {
 	@Column(name= "tipo", length=3 , nullable=false)
 	private String tipo ; // 1.produto venda 2.insumo/mat prim 3.intermediario 4.servico .... (usar tablov (tipo_tablov , opcao , descr));
 	
-	@Column(name= "categoria", nullable=false)	
-	private String categoria ;
+	@ManyToOne
+	@JoinColumn(name="categoria_id", nullable=false)
+	private Categoria categoria ;
 	
 	@Column(name= "url_imagem" , length=512)
 	private String url_imagem ;
@@ -124,11 +127,11 @@ public class Produto extends Entidade implements Serializable  {
 		this.tipo = tipo;
 	}
 
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 

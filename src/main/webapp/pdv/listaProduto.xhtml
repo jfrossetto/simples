@@ -73,7 +73,7 @@
                            	           value="Novo"
                            	           icon="fa fa-plus"
                            	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro()}"
+                           	           actionListener="#{bean.modoNovoCadastro}"
                                    	   styleClass="btn btn-flat btn-info"
                                    	   rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW')}" />
                             </div> 
@@ -109,7 +109,7 @@
 						
 						<p:column>
 							<f:facet name="header">Categoria</f:facet>
-							<h:outputText value="#{produto.categoria}"/>
+							<h:outputText value="#{produto.categoria.descricao}"/>
 						</p:column>
 						
 						<p:column>
