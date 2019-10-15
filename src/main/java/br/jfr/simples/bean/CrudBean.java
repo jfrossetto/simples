@@ -3,20 +3,26 @@ package br.jfr.simples.bean;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import org.primefaces.component.autocomplete.AutoComplete;
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.bean.GenericoBean.ViewState;
+import br.jfr.simples.componente.ListaTabela;
+import br.jfr.simples.model.bean.ModalBusca;
+import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.service.IServicoGenerico;
@@ -37,6 +43,12 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 
 	protected Class classeObjPrincipal ;
 	protected Field fieldObjPrincipal ; 
+	
+	protected ListaTabela<T> listaTabela ;
+	protected ListaTabela<T> listaTabelaModal ;
+	
+	protected Object objLista;
+	protected Object objListaModal;
 	
 	@PostConstruct
 	public void init() {
@@ -211,7 +223,32 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 		List lista = servicoAutoComplete.buscaAutoComplete(query);
 		return lista;
 	}
-	
+
+    public void abrirModalBusca(ActionEvent ev) {
+    	classeModal = MODAL_BUSCA;
+    	
+        String nomeServico = (String) ev.getComponent().getAttributes().get("servicomodal");
+        logger.info(" carregaAutoComplete - servico: "+nomeServico);
+        ServicoGenerico servicoModal = (ServicoGenerico) Utils.pegaObjetoCampo(this,nomeServico);
+        listaTabelaModal = new ListaTabela(servicoModal);
+    	
+    	ModalBusca modalBusca = new ModalBusca()
+    								.setTitulo("Busca Categoria")
+    								.setUrlLista("/pdv/listaCategoria.xhtml");
+    	
+    	ExternalContext externalContext = facesContext.getExternalContext();
+    	Map<String, Object> sessionMap = externalContext.getSessionMap();
+    	sessionMap.put(classeModal, modalBusca);
+		executeJS("PF('tabela').unselectAllRows();");
+    	updateComponent("form_modalBusca");
+    	abrirModal(classeModal);
+    	
+    }
+    
+	public void selecionaObj(SelectEvent event) {
+		logger.info(" selecionaObj crud ");
+	}
+
 
 	// getters & setters
 	public UsuarioLogado getUsuarioLogado() {
@@ -220,6 +257,38 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 	
 	public void setUsuarioLogado(UsuarioLogado usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
+	}
+	
+	public ListaTabela<T> getListaTabela() {
+		return listaTabela;
+	}
+
+	public void setListaTabela(ListaTabela<T> listaTabela) {
+		this.listaTabela = listaTabela;
+	}
+
+	public ListaTabela<T> getListaTabelaModal() {
+		return listaTabelaModal;
+	}
+
+	public void setListaTabelaModal(ListaTabela<T> listaTabelaModal) {
+		this.listaTabelaModal = listaTabelaModal;
+	}
+
+	public Object getObjLista() {
+		return objLista;
+	}
+
+	public void setObjLista(Object objLista) {
+		this.objLista = objLista;
+	}
+
+	public Object getObjListaModal() {
+		return objListaModal;
+	}
+
+	public void setObjListaModal(Object objListaModal) {
+		this.objListaModal = objListaModal;
 	}
 	
 	

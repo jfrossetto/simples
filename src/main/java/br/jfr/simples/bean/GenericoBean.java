@@ -23,8 +23,8 @@ public abstract class GenericoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final String MODAL_AVISO_CONF = "ModalAvisoConf";
-	private final String MODAL_BUSCA = "ModalBusca";
+	protected final String MODAL_AVISO_CONF = "ModalAvisoConf";
+	protected final String MODAL_BUSCA = "ModalBusca";
 	
 	protected ViewState viewState;
 
@@ -199,23 +199,6 @@ public abstract class GenericoBean implements Serializable {
     public void updatePanelsConteudo() {
     	updateComponent("panel_conteudo");
     	updateComponent("panel_header_conteudo");
-    }
-    
-    public void abrirModalBusca(ActionEvent ev) {
-    	classeModal = MODAL_BUSCA;
-    	
-    	ModalBusca modalBusca = new ModalBusca()
-    								.setTitulo("Busca Categoria")
-    								.setUrlLista("/pdv/listaProduto.xhtml");
-    	
-    	
-    	ExternalContext externalContext = facesContext.getExternalContext();
-    	Map<String, Object> sessionMap = externalContext.getSessionMap();
-    	sessionMap.put(classeModal, modalBusca);
-    	
-    	updateComponent("form_modalBusca");
-    	abrirModal(classeModal);
-    	
     }
     
     public void abrirModalAvisoConf(ModalAvisoConf modal) {

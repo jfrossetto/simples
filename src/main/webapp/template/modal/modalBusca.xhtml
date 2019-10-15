@@ -11,12 +11,12 @@
             <div class="modal-content">
             
                 <script>
-                    $('#modalAviso').on('hidden.bs.modal', function () {
+                    $('#ModalBusca').on('hidden.bs.modal', function () {
                         fechar_modal();
                     });
                 </script>
                   
-                <h:form id="form_modalBusca">
+                <h:form id="form_modalBusca"> 
                  
                     <div class="modal-header">
                         <button class="close" onclick="fechar_modal()" data-dismiss="modal" type="button">
@@ -24,7 +24,7 @@
                             <span class="sr-only">Fechar</span>
                         </button>
                         <h4 class="modal-title">
-                            #{sessionScope['ModalBusca'].titulo}
+                            #{sessionScope['ModalBusca'].titulo} - #{bean.getTituloView()}
                         </h4>
                     </div>
                     
@@ -35,10 +35,10 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <p:remoteCommand name="fechar_modal" immediate="true" global="false" actionListener="#{bean.fecharModal}" />
+                        <p:remoteCommand name="fechar_modal" immediate="true" global="false" actionListener="#{bean.fecharModal('ModalBusca')}" />
                     </div>
                          
-                </h:form>
+                </h:form>  
             </div>
         </div>
     </div>

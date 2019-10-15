@@ -43,7 +43,9 @@
     	<h:panelGroup id="panel_conteudo" layout="block">
     	
     	 	<h:panelGroup id="panel_lista_tabela" layout="block" rendered="#{bean.viewState eq 'LISTING'}">
-    	 		<ui:insert name="listaTabela"/>
+	 			<h:form id="form_filtro_tabela">
+	    	 		<ui:insert name="listaTabela"/>
+	    	 	</h:form>
     	 	</h:panelGroup>
     	
     	 	<h:panelGroup id="panel_form_crud" layout="block" rendered="#{bean.viewState ne 'LISTING'}">

@@ -21,6 +21,7 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.jfr.simples.model.bean.FiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.util.Utils;
@@ -168,6 +169,30 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 		} catch (javax.persistence.NoResultException e) {
 			return null ;
 		}
+	}
+	
+    public List<T> carregaPagina(FiltroPadrao filtro, int pagina , int tamanhopagina) {
+    	throw new IllegalStateException("carregaPagina não implementado");
+    }
+		
+	public List<T> carregaPagina(String sql, Map<String, Object> mapaParam, int pagina , int tamanhopagina ) {
+			EntityManager em = this.getEntityManager();
+			Query query = em.createQuery(sql); 
+			mapaParam.forEach( (k,v) -> {
+				if( v instanceof Calendar ) {
+					query.setParameter(k, (Calendar) v, TemporalType.TIMESTAMP);
+				} else {
+					query.setParameter(k, v);
+				}
+			} );
+			try {
+				return (List<T>) query
+									.setFirstResult(pagina)
+									.setMaxResults(tamanhopagina)
+									.getResultList();
+			} catch (javax.persistence.NoResultException e) {
+				return null ;
+			}
 	}
 
 }

@@ -43,6 +43,8 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	private Part imgPsp;
 	
 	private List<Produto> produtos ;
+
+	private List<Categoria> categorias ;
 	
 	private Calendar dataini;
 	private Calendar datafim;
@@ -91,9 +93,15 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
     */
 	
 	public void selecionaObj(SelectEvent event) {
-		produto = (Produto) event.getObject();
-		modoEdicao();
-		logger.info( " teste pegaOjetoCampo2: " + Utils.pegaObjetoCampo2(this, "produto.categoria.descricao") );
+		if( event.getObject() instanceof Categoria ) {
+			produto.setCategoria( (Categoria) event.getObject() );
+			updatePanelsConteudo();
+			fecharModal(classeModal);
+		} else {
+			produto = (Produto) event.getObject();
+			modoEdicao();
+			//logger.info( " teste pegaOjetoCampo2: " + Utils.pegaObjetoCampo2(this, "produto.categoria.descricao") );
+		}
 	}
 	
     public void showUpload(Long id) {
@@ -247,6 +255,14 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 
 	public void setImgPsp(Part imgPsp) {
 		this.imgPsp = imgPsp;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 	
 }
