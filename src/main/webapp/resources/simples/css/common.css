@@ -263,3 +263,7 @@ no-padding {
 .input-group-btn-ac {
 	vertical-align: top !important;
 }
+
+.input-group {
+	margin-bottom: -5px;
+}

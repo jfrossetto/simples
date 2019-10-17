@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 
 public interface IServicoGenerico<T extends IEntidade, ID extends Serializable> {
@@ -21,7 +22,7 @@ public interface IServicoGenerico<T extends IEntidade, ID extends Serializable> 
     public List<T> carregaRegistros(String sql);
     public List<T> carregaRegistros(String sql,Map<String,Object> mapaParam);
 
-    public List<T> carregaPagina(FiltroPadrao filtro, int pagina , int tamanhopagina) ;    
+    public List<T> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) ;    
     public List<T> carregaPagina(String sql, Map<String, Object> mapaParam, int pagina , int tamanhopagina) ;
     
     public T carregaEntidade(String sql,Map<String,Object> mapaParam);

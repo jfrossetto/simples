@@ -8,6 +8,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.service.ServicoGenerico;
 
@@ -16,7 +17,7 @@ public class ListaTabela<T extends IEntidade> extends LazyDataModel<T> implement
 	private static final long serialVersionUID = 1L;
 	
 	protected ServicoGenerico servico ;
-	protected FiltroPadrao filtro;
+	protected IFiltroPadrao filtro;
 
 	public ListaTabela(ServicoGenerico servico) {
 		super();
@@ -54,12 +55,21 @@ public class ListaTabela<T extends IEntidade> extends LazyDataModel<T> implement
         return (List<T>) this.getWrappedData();
     }
 	
-	public FiltroPadrao getFiltro() {
+	public IFiltroPadrao getFiltro() {
 		return filtro;
 	}
 
-	public ListaTabela setFiltro(FiltroPadrao filtro) {
+	public ListaTabela setFiltro(IFiltroPadrao filtro) {
 		this.filtro = filtro;
+		return this;
+	}
+
+	public ServicoGenerico getServico() {
+		return servico;
+	}
+
+	public ListaTabela setServico(ServicoGenerico servico) {
+		this.servico = servico;
 		return this;
 	}
 

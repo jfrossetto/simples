@@ -11,6 +11,8 @@
 	<ui:param name="bean" value="#{categoriaBean}"/>
 	
 	<ui:define name="listaTabela">
+		<ui:param name="filtroAvancado" value="#{false}"/>
+		<ui:param name="filtro" value="#{bean.categoriaFiltro}"/>
 		<ui:include src="listaCategoria.xhtml"/>	
 	</ui:define>
 	

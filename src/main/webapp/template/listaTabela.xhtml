@@ -17,12 +17,12 @@
 						<div class="input-group">
 							<p:inputText  id="filtro"
 										    styleClass="form-control" 
-								            value="#{bean.filtro}" 
-								            placeholder="descricao , categoria" >
+								            value="#{sessionScope['ModalBusca'] eq null ? filtro.filtro : bean.filtroModal.filtro }" 
+								            placeholder="pesquise por ..." >
 							</p:inputText>
 							<div class="input-group-btn">
 			    				<p:commandLink id="btBusca"
-	    			    		             actionListener="#{bean.buscaTabela()}" 
+	    			    		             actionListener="#{ bean.buscaTabela() }" 
 	    			            		     update="panel_tabela"
 											 styleClass="btn btn-flat btn-default">
 									<i class="fa fa-search"/>
@@ -34,20 +34,21 @@
    	            		<p:commandButton id="filtroAvancado"
    	            		               immediate="true"
                            	           value="Filtro"
+                           	           rendered="#{ sessionScope['ModalBusca'] eq null ? filtroAvancado : false }"
                            	           icon="fa fa-filter"
                            	           resetValues="true"
                            	           my="right top"
                            	           at="right bottom"
                                    	   styleClass="btn btn-flat btn-default"
                                    	   />
-					        
-						<p:commandButton immediate="true"
-                           	           value="Novo"
-                           	           icon="fa fa-plus"
-                           	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro}"
-                                   	   styleClass="btn btn-flat btn-info"
-                                   	   rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW')}" />
+  	            	    <p:overlayPanel id="panel_filtroAvancado" 
+   	            	                    for="filtroAvancado"
+   	            	                    style="width:400px; height: auto;" 
+   	            	                    showEffect="slide" hideEffect="slide" 
+   	            	                    dynamic="true"
+                    					dismissable="false" showCloseIcon="true">
+                    		<ui:insert name="filtroAvancado"/>
+                        </p:overlayPanel>
 			    	</div>
 			</h:panelGroup>
  				    
@@ -66,7 +67,8 @@
 						             rowIndexVar="index"
 						             rows="10" paginator="true" paginatorPosition="bottom">
 						             
-						<p:ajax event="rowSelect" listener="#{bean.selecionaObj}" update="#{ sessionScope['ModalBusca'] eq null ? '' : 'form_modalBusca' }"/>
+						<p:ajax event="rowSelect" listener="#{ bean.selecionaObj  }" 
+												  update="#{ sessionScope['ModalBusca'] eq null ? '' : 'form_modalBusca' }"/>
 						<ui:insert name="listaColunas"/>
 						   
 					</p:dataTable>

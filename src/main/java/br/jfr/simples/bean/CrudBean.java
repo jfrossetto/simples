@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.bean.GenericoBean.ViewState;
 import br.jfr.simples.componente.ListaTabela;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.bean.ModalBusca;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.IEntidade;
@@ -46,6 +47,8 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 	
 	protected ListaTabela<T> listaTabela ;
 	protected ListaTabela<T> listaTabelaModal ;
+
+	protected IFiltroPadrao filtroModal ; 
 	
 	protected Object objLista;
 	protected Object objListaModal;
@@ -67,6 +70,33 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
     }
 	
 	public void buscaTabela() {
+		if( getModalBusca() == null ) {
+			buscaTabelaPrincipal();
+		} else {
+			buscaTabelaModal();
+		}
+	}
+	
+	public void buscaTabelaPrincipal() {
+		logger.info("... buscaTabelaPrincipal ..."  );
+	}
+	
+	public void buscaTabelaModal() {
+		logger.info("... buscaTabelaModal ..." + filtroModal.getFiltro() );
+	}
+	
+	public void selecionaObj(SelectEvent event) {
+		logger.info(" selecionaObj crud ");
+		if( getModalBusca() == null ) {
+			selecionaObjPrincipal(event);
+		} else {
+			selecionaObjModal(event);
+		}
+	}
+	
+	public void selecionaObjPrincipal(SelectEvent event) {
+	}
+	public void selecionaObjModal(SelectEvent event) {
 	}
 	
     public String getDefaultMessagesComponentId() {
@@ -228,13 +258,21 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
     	classeModal = MODAL_BUSCA;
     	
         String nomeServico = (String) ev.getComponent().getAttributes().get("servicomodal");
-        logger.info(" carregaAutoComplete - servico: "+nomeServico);
+        String titulo = (String) ev.getComponent().getAttributes().get("titulo");
+        String url = (String) ev.getComponent().getAttributes().get("urlmodal");
+        String nomeFiltro = (String) ev.getComponent().getAttributes().get("filtro");
+        String campo = (String) ev.getComponent().getAttributes().get("campo");
+        
+        logger.info(" abrirModalBusca - servico: "+nomeServico);
         ServicoGenerico servicoModal = (ServicoGenerico) Utils.pegaObjetoCampo(this,nomeServico);
-        listaTabelaModal = new ListaTabela(servicoModal);
+        filtroModal = (IFiltroPadrao) Utils.pegaObjetoCampo(this,nomeFiltro);
+        listaTabelaModal = new ListaTabela(servicoModal)
+        								.setFiltro(filtroModal);
     	
     	ModalBusca modalBusca = new ModalBusca()
-    								.setTitulo("Busca Categoria")
-    								.setUrlLista("/pdv/listaCategoria.xhtml");
+    								.setTitulo(titulo)
+    								.setUrlLista(url)
+    								.setCampo(campo);
     	
     	ExternalContext externalContext = facesContext.getExternalContext();
     	Map<String, Object> sessionMap = externalContext.getSessionMap();
@@ -242,13 +280,14 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 		executeJS("PF('tabela').unselectAllRows();");
     	updateComponent("form_modalBusca");
     	abrirModal(classeModal);
-    	
     }
     
-	public void selecionaObj(SelectEvent event) {
-		logger.info(" selecionaObj crud ");
-	}
-
+    public ModalBusca getModalBusca() {
+    	ExternalContext externalContext = facesContext.getExternalContext();
+    	Map<String, Object> sessionMap = externalContext.getSessionMap();
+    	return (ModalBusca) sessionMap.get(MODAL_BUSCA);
+    }
+    
 
 	// getters & setters
 	public UsuarioLogado getUsuarioLogado() {
@@ -289,6 +328,14 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 
 	public void setObjListaModal(Object objListaModal) {
 		this.objListaModal = objListaModal;
+	}
+
+	public IFiltroPadrao getFiltroModal() {
+		return filtroModal;
+	}
+
+	public void setFiltroModal(IFiltroPadrao filtroModal) {
+		this.filtroModal = filtroModal;
 	}
 	
 	

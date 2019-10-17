@@ -23,6 +23,9 @@ import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
+import br.jfr.simples.componente.ListaTabela;
+import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.FiltroProduto;
 import br.jfr.simples.model.bean.ModalAvisoConf;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Produto;
@@ -39,16 +42,12 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	private static final long serialVersionUID = 1L;
 	
 	private Produto produto ;
+	private FiltroProduto produtoFiltro = new FiltroProduto();
+	private FiltroPadrao categoriaFiltro = new FiltroPadrao();
 	
 	private Part imgPsp;
 	
-	private List<Produto> produtos ;
-
-	private List<Categoria> categorias ;
-	
-	private Calendar dataini;
-	private Calendar datafim;
-	private String filtro ; 
+//	private List<Categoria> categorias ;
 	
     @Inject
     private ProdutoServico produtoServico;
@@ -70,8 +69,9 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
     }
 	
     @Override
-	public void buscaTabela() {
-		produtos = produtoServico.buscaPorFiltro(filtro, dataini, datafim);
+	public void buscaTabelaPrincipal() {
+		listaTabela = new ListaTabela<Produto>(produtoServico)
+							.setFiltro(produtoFiltro);
 		return ;	
 	}
     
@@ -92,16 +92,21 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
     }
     */
 	
-	public void selecionaObj(SelectEvent event) {
-		if( event.getObject() instanceof Categoria ) {
-			produto.setCategoria( (Categoria) event.getObject() );
+    @Override
+	public void selecionaObjPrincipal(SelectEvent event) {
+		if( objLista instanceof Produto ) {
+			produto = (Produto) objLista;
+			modoEdicao();
+		}
+	}
+    
+    @Override
+	public void selecionaObjModal(SelectEvent event) {
+		if( objListaModal instanceof Categoria ) {
+			produto.setCategoria( (Categoria) objListaModal );
 			updatePanelsConteudo();
 			fecharModal(classeModal);
-		} else {
-			produto = (Produto) event.getObject();
-			modoEdicao();
-			//logger.info( " teste pegaOjetoCampo2: " + Utils.pegaObjetoCampo2(this, "produto.categoria.descricao") );
-		}
+		} 
 	}
 	
     public void showUpload(Long id) {
@@ -147,13 +152,6 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 
     @Override
     public void atualizar(ActionEvent ev) {
-    	abrirModalAvisoConf( new ModalAvisoConf()
-    			                  .setTitulo("Atualizado")
-    			                  .setMsgCorpo("Produto: "+produto.getDescricao()+" Atualizado! ")
-    			                  .setBtn2(true)
-    			                  .setBtn2Label("Fechar")
-    			                  .setBtn2Classe("btn-default")
-    						);
     	super.atualizar(ev);
     }
     
@@ -163,6 +161,11 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
     	if(  pegaModalAvisoConf() != null && pegaModalAvisoConf().getTitulo().equals("Confirma Exclusão") ) {
     		logger.info(" ... excluindo sqn ... ");
     		//super.excluir(null);
+        	abrirModalAvisoConf( new ModalAvisoConf()
+        								.setTitulo("Excluido")
+        								.setMsgCorpo("Produto: "+produto.getDescricao()+" Excluido! ")
+        					   );
+    		
     	}
     }
     
@@ -209,29 +212,6 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 		this.produto = produto;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
-
-	public Calendar getDataini() {
-		return dataini;
-	}
-
-	public void setDataini(Calendar dataini) {
-		this.dataini = dataini;
-	}
-
-	public Calendar getDatafim() {
-		return datafim;
-	}
-
-	public void setDatafim(Calendar datafim) {
-		this.datafim = datafim;
-	}
 
 	//public UploadedFile getImgPsp() {
 	//	return imgPsp;
@@ -241,12 +221,21 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	//this.imgPsp = imgPsp;
 	//}
 
-	public String getFiltro() {
-		return filtro;
+
+	public FiltroProduto getProdutoFiltro() {
+		return produtoFiltro;
 	}
 
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
+	public void setProdutoFiltro(FiltroProduto produtoFiltro) {
+		this.produtoFiltro = produtoFiltro;
+	}
+
+	public FiltroPadrao getCategoriaFiltro() {
+		return categoriaFiltro;
+	}
+
+	public void setCategoriaFiltro(FiltroPadrao categoriaFiltro) {
+		this.categoriaFiltro = categoriaFiltro;
 	}
 
 	public Part getImgPsp() {
@@ -256,7 +245,8 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	public void setImgPsp(Part imgPsp) {
 		this.imgPsp = imgPsp;
 	}
-
+	
+/*
 	public List<Categoria> getCategorias() {
 		return categorias;
 	}
@@ -264,5 +254,5 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	
+*/
 }

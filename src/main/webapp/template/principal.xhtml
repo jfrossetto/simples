@@ -102,11 +102,14 @@
     	
 		<div class="content-wrapper" id="conteudo">
 			<h:panelGroup id="panel_header_conteudo" layout="block">
-        		<section class="content-header">
+        		<section class="content-header" style="display:flex;">
                     <h1>
                         <ui:insert name="titulo" />
                         <small><ui:insert name="descricaoPagina" /></small>
                     </h1>
+   	            	<div class="margin-btn" style="margin-left: auto;" >
+   	            		<ui:insert name="botoesHeader" />
+   	            	</div>
                     <!-- 
 			        <ol class="breadcrumb">
                         <li>

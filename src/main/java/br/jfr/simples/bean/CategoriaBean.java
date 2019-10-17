@@ -46,7 +46,7 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
     @Inject 
     private CategoriaServico categoriaServico;
     
-    private FiltroPadrao categoriaFiltro = new FiltroPadrao();
+    private FiltroPadrao categoriaFiltro = new FiltroPadrao<Categoria>();
     
 	@PostConstruct
 	@Override
@@ -63,7 +63,7 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
     }
 	
     @Override
-	public void buscaTabela() {
+	public void buscaTabelaPrincipal() {
 		listaTabela = new ListaTabela<Categoria>(categoriaServico)
 								.setFiltro(categoriaFiltro);
 		return ;	
@@ -75,7 +75,7 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
     }
 
     @Override
-	public void selecionaObj(SelectEvent event) {
+	public void selecionaObjPrincipal(SelectEvent event) {
 		if( objLista instanceof Categoria ) {
 			categoria = (Categoria) objLista;
 			modoEdicao();
@@ -87,7 +87,7 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
     	logger.info(" ... modalAvisoConfBtn2() ... ");
     	if(  pegaModalAvisoConf() != null && pegaModalAvisoConf().getTitulo().equals("Confirma Exclusão") ) {
     		logger.info(" ... excluindo sqn ... ");
-    		//super.excluir(null);
+    		super.excluir(null);
     	}
     }
     
@@ -123,12 +123,12 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
 		this.categoria = categoria;
 	}
 
-	public String getFiltro() {
-		return categoriaFiltro.getFiltro();
+	public FiltroPadrao getCategoriaFiltro() {
+		return categoriaFiltro;
 	}
 
-	public void setFiltro(String filtro) {
-		categoriaFiltro.setFiltro(filtro);
+	public void setCategoriaFiltro(FiltroPadrao categoriaFiltro) {
+		this.categoriaFiltro = categoriaFiltro;
 	}
 
 	public CategoriaServico getCategoriaServico() {

@@ -36,7 +36,5 @@ public class ModalBusca {
 		this.campo = campo;
 		return this;
 	}
-	
-	
 
 }

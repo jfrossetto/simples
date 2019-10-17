@@ -33,6 +33,27 @@
     </ui:define>
 	-->
 	
+	<ui:define name="botoesHeader">
+	
+		<p:commandButton immediate="true"
+		                 value="Voltar"
+		                 type="button"
+		                 icon="fa fa-reply" 
+		                 onclick="voltar()"  
+		                 rendered="#{bean.viewState ne 'LISTING'}"
+						 styleClass="btn btn-flat btn-default" />
+		<p:remoteCommand  name="voltar" resetValues="true" actionListener="#{bean.modoListaTabela()}" immediate="true"/>
+		
+		<p:commandButton immediate="true"
+						 value="Novo"
+                         icon="fa fa-plus"
+                         resetValues="true"
+                         actionListener="#{bean.modoNovoCadastro}"
+                         styleClass="btn btn-flat btn-info"
+                         rendered="#{(bean.podeIncluir() and bean.viewState eq 'EDITING') or bean.viewState eq 'LISTING'}" />
+							
+	</ui:define>
+		
     <ui:define name="modais">
 		<ui:include src="../template/modal/modalAvisoConf.xhtml"/>
 		<ui:include src="../template/modal/modalBusca.xhtml"/>
@@ -68,21 +89,8 @@
 							</div>
 							 
 	    	            	<div class="margin-btn" style="margin-left: auto;" >
-								<p:commandButton immediate="true"
-					                 value="Voltar"
-					                 type="button"
-					                 icon="fa fa-reply" 
-					                 onclick="voltar()"  
-									 styleClass="btn btn-flat btn-default" />
-								<p:remoteCommand  name="voltar" resetValues="true" actionListener="#{bean.modoListaTabela()}" immediate="true"/>
-        	            	   	<p:commandButton immediate="true"
-                           	           value="Novo"
-                           	           icon="fa fa-plus"
-                           	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro}"
-                                   	   styleClass="btn btn-flat btn-info"
-                                   	   rendered="#{bean.podeIncluir() and bean.viewState eq 'EDITING'}" />
-							</div>
+	    	            	</div>
+	    	            	
                 		</div>
                 		
 		                <h:panelGroup id="panel_cadastro" styleClass="box-body">

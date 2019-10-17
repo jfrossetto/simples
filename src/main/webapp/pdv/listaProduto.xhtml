@@ -7,52 +7,17 @@
     xmlns:jsf="http://xmlns.jcp.org/jsf"	
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:fragment>
-	
-	<div class="box">
-			<h:panelGroup id="panel_filtroTabela"  styleClass="box-header with-border" style="display:flex;" layout="block">
-					<p:defaultCommand target="btBusca"/>
-					<div class="col-md-6 no-padding">
-						<div class="input-group">
-							<p:inputText  id="filtro"
-										    styleClass="form-control" 
-								            value="#{produtoBean.filtro}" 
-								            placeholder="descricao , categoria" >
-							</p:inputText>
-							<div class="input-group-btn">
-			    				<p:commandLink id="btBusca"
-	    			    		             actionListener="#{bean.buscaTabela()}" 
-	    			            		     update="panel_tabela"
-											 styleClass="btn btn-flat btn-default">
-									<i class="fa fa-search"/>
-								</p:commandLink>
-							</div>
-						</div>
-					</div>
-   	            	<div class="margin-btn" style="margin-left: auto;" >
-   	            		<p:commandButton id="filtroAvancado"
-   	            		               immediate="true"
-                           	           value="Filtro"
-                           	           icon="fa fa-filter"
-                           	           resetValues="true"
-                           	           my="right top"
-                           	           at="right bottom"
-                                   	   styleClass="btn btn-flat btn-default"
-                                   	   />
-   	            	    <p:overlayPanel id="panel_filtroAvancado" 
-   	            	                    for="filtroAvancado"
-   	            	                    style="width:400px; height: auto;" 
-   	            	                    showEffect="slide" hideEffect="slide" 
-   	            	                    dynamic="true"
-                    					dismissable="false" showCloseIcon="true">
+<ui:composition template="../template/listaTabela.xhtml">
 
+	<ui:define name="filtroAvancado">
+	
     	 					<h:panelGroup layout="block">
     					 		<div class="box-body">
 									<h:panelGroup styleClass="form-group col-md-6" layout="block">
 										<p:outputLabel value="Val Inicial:" for="fdataini" title="Data inicial em que o produto estará ativo"/>
 										<div class="input-group form-control-calendar ">
 			            					<p:calendar id="fdataini" 
-    	           		 								value="#{produtoBean.dataini}"
+    	           		 								value="#{filtro.dataini}"
         	            	        					mask="true"
             	            		    				pattern="dd/MM/yyyy"
 														converter="dateCalendarConverter">
@@ -63,7 +28,7 @@
 										<p:outputLabel value="Val Inicial:" for="fdatafim" title="Data final em que o produto estará ativo"/>
 										<div class="input-group form-control-calendar ">
 			            					<p:calendar id="fdatafim" 
-               		 									value="#{produtoBean.datafim}"
+               		 									value="#{filtro.datafim}"
                     	        						mask="true"
                         		    					pattern="dd/MM/yyyy"
 														converter="dateCalendarConverter">
@@ -79,111 +44,56 @@
 											       styleClass="btn btn-flat btn-warning"/>
   								</div>	
 							</h:panelGroup>
-					    </p:overlayPanel>
-					        
-						<p:commandButton immediate="true"
-                           	           value="Novo"
-                           	           icon="fa fa-plus"
-                           	           resetValues="true"
-                           	           actionListener="#{bean.modoNovoCadastro}"
-                                   	   styleClass="btn btn-flat btn-info"
-                                   	   rendered="#{usuarioLogado.temPermissao('R_PRODUTO_NEW')}" />
-			    	</div>
-			</h:panelGroup>
- 				    
-    	 	<h:panelGroup id="panel_tabela" 
-    	 				layout="block" 
-    	 				styleClass="box-body">
-				
-					<p:dataTable value="#{bean.produtos}" 
-						             var="produto" 
-						             id="tblProdutos"
-						             widgetVar="tabela"
-						             selection="#{bean.produto}"
-						             selectionMode="single"
-						             rowKey="#{produto.id}"
-						             rows="10" paginator="true" paginatorPosition="bottom">
-						             
-						<p:ajax event="rowSelect" listener="#{bean.selecionaObj}" />
-						   
-						<p:column sortable="true" sortBy="#{produto.id}">
+	
+	</ui:define>
+		
+	<ui:define name="listaColunas">
+	
+						<p:column sortable="true" sortBy="#{lista.id}">
 							<f:facet name="header">id</f:facet>
-							<h:outputText value="#{produto.id}"/>
+							<h:outputText value="#{lista.id}"/>
 						</p:column>
 						
-						<p:column sortable="true" sortBy="#{produto.id}" filterable="true" filterBy="#{produto.descricao}"> 
+						<p:column sortable="true" sortBy="#{lista.id}" filterable="true" filterBy="#{lista.descricao}"> 
 							<f:facet name="header">Descrição</f:facet>
-							<h:outputText value="#{produto.descricao}"/>
+							<h:outputText value="#{lista.descricao}"/>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Categoria</f:facet>
-							<h:outputText value="#{produto.categoria.descricao}"/>
+							<h:outputText value="#{lista.categoria.descricao}"/>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Preco</f:facet>
-							<h:outputText value="#{produto.preco}"/>
+							<h:outputText value="#{lista.preco}"/>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Inicio</f:facet>
-							<h:outputText value="#{produto.datainicio.time}">
+							<h:outputText value="#{lista.datainicio.time}">
 								<f:convertDateTime pattern="dd/MM/yyyy"  />
 							</h:outputText>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Fim</f:facet>
-							<h:outputText value="#{produto.datafim.time}">
+							<h:outputText value="#{lista.datafim.time}">
 								<f:convertDateTime pattern="dd/MM/yyyy"  />
 							</h:outputText>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Ativo</f:facet>
-							<h:outputText value="#{produto.regAtivo}"/>
+							<h:outputText value="#{lista.regAtivo}"/>
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">Cadastrado Por</f:facet>
-							<h:outputText value="#{produto.criadoPor.nome}"/>
+							<h:outputText value="#{lista.criadoPor.nome}"/>
 						</p:column>
-						
-						<p:column  
-                                  styleClass="align-center"
-                                  headerText="acoes">
-							<f:facet name="header">Ações</f:facet>
+	</ui:define>
 	
-	                        <p:commandButton icon="fa fa-edit"
-                            	             title="Alterar"
-                                	         styleClass="btn btn-flat btn-default"
-                                	         update="panel_conteudo"
-                                    	     actionListener="#{bean.modoEdicao() }" />
-                                    	     
-							<ui:remove>						
-							<p:commandLink icon="fa fa-upload"
-                            	             title="Upload Imagem"
-                                	         styleClass="btn btn-flat btn-default"
-                                    	     action="#{produtoBean.showUpload(produto.id) }" /> 
-                        	<p:spacer width="10"/>
-                        	<p:commandButton icon="fa fa-remove"
-                            	             title="Remover"
-                                	         styleClass="btn btn-flat btn-default"
-                                    	     actionListener="#{produtoBean.changeToDelete(produto.id) }" />
-							</ui:remove>
-                                    	      
-						</p:column>
-							
-					</p:dataTable>
-					
-			</h:panelGroup>
-			
-	</div>
-	
-</ui:fragment>
+</ui:composition>
 
 </html>
-
-
-

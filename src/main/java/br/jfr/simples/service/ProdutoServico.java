@@ -15,6 +15,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
+import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.FiltroProduto;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.model.db.Usuario;
@@ -51,6 +54,35 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		sql.append(" order by p.id desc ");						
 		
 		return carregaRegistros(sql.toString(), mapaParam);
+		
+	}
+	
+	public List<Produto> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
+		
+		Map<String,Object> mapaParam = new HashMap<>() ;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select p from Produto p where 1 = 1 ");
+		/*
+		if( filtro.getDataini() != null ) {
+			sql.append(" and p.datainicio >= :dtini " );
+			mapaParam.put("dtini", filtro.getDataini() );
+		}
+		
+		if( filtro.getDatafim() != null ) {
+			sql.append(" and p.datafim < :dtfim " );
+			mapaParam.put("dtfim", filtro.getDatafim() );
+		}
+		*/
+		if( !(filtro.getFiltro() == null || filtro.getFiltro().equals("")) ) {
+			sql.append(" and ( p.descricao like :filtro ") 
+				.append( "    or p.categoria.descricao like :filtro )" );
+	    	mapaParam.put("filtro", "%"+filtro.getFiltro().toUpperCase().trim()+"%" );
+		}
+		
+		sql.append(" order by p.id desc ");						
+		
+		return carregaPagina(sql.toString(), mapaParam, pagina, tamanhopagina);
 		
 	}
 

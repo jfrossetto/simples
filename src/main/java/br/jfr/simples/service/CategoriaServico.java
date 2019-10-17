@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Usuario;
 
@@ -41,7 +42,7 @@ public class CategoriaServico extends ServicoGenerico<Categoria, Long> implement
 		
 	}
 	
-	public List<Categoria> carregaPagina(FiltroPadrao filtro, int pagina , int tamanhopagina) {
+	public List<Categoria> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
 		
 		Map<String,Object> mapaParam = new HashMap<>() ;
 		StringBuilder sql = new StringBuilder();

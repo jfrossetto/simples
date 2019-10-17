@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.model.bean.IFiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.util.Utils;
@@ -171,7 +172,7 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 		}
 	}
 	
-    public List<T> carregaPagina(FiltroPadrao filtro, int pagina , int tamanhopagina) {
+    public List<T> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
     	throw new IllegalStateException("carregaPagina não implementado");
     }
 		
