@@ -24,8 +24,9 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.jfr.simples.componente.ListaTabela;
-import br.jfr.simples.model.bean.FiltroPadrao;
-import br.jfr.simples.model.bean.FiltroProduto;
+import br.jfr.simples.filtro.FiltroCategoria;
+import br.jfr.simples.filtro.FiltroPadrao;
+import br.jfr.simples.filtro.FiltroProduto;
 import br.jfr.simples.model.bean.ModalAvisoConf;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Produto;
@@ -43,7 +44,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	
 	private Produto produto ;
 	private FiltroProduto produtoFiltro = new FiltroProduto();
-	private FiltroPadrao categoriaFiltro = new FiltroPadrao();
+	private FiltroCategoria categoriaFiltro = new FiltroCategoria();
 	
 	private Part imgPsp;
 	
@@ -110,7 +111,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	}
 	
     public void showUpload(Long id) {
-        produto = produtoServico.findById(id); 
+        //produto = produtoServico.buscaPorId(id, false); 
         this.updateAndOpenDialog("imgProdutoDialog", "dialogImgProduto");
     }
     
@@ -230,11 +231,11 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 		this.produtoFiltro = produtoFiltro;
 	}
 
-	public FiltroPadrao getCategoriaFiltro() {
+	public FiltroCategoria getCategoriaFiltro() {
 		return categoriaFiltro;
 	}
 
-	public void setCategoriaFiltro(FiltroPadrao categoriaFiltro) {
+	public void setCategoriaFiltro(FiltroCategoria categoriaFiltro) {
 		this.categoriaFiltro = categoriaFiltro;
 	}
 

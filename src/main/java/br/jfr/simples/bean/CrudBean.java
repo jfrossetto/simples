@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import br.jfr.simples.bean.GenericoBean.ViewState;
 import br.jfr.simples.componente.ListaTabela;
-import br.jfr.simples.model.bean.IFiltroPadrao;
+import br.jfr.simples.filtro.IFiltroPadrao;
 import br.jfr.simples.model.bean.ModalBusca;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.IEntidade;

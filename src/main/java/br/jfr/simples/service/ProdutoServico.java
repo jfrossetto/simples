@@ -15,9 +15,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
-import br.jfr.simples.model.bean.FiltroPadrao;
-import br.jfr.simples.model.bean.FiltroProduto;
-import br.jfr.simples.model.bean.IFiltroPadrao;
+import br.jfr.simples.filtro.FiltroPadrao;
+import br.jfr.simples.filtro.FiltroProduto;
+import br.jfr.simples.filtro.IFiltroPadrao;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.model.db.Usuario;
@@ -27,65 +27,7 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 
 	private static final long serialVersionUID = 1L;
 	
-	public List<Produto> buscaPorFiltro(String filtro, Calendar dataini, Calendar datafim) {
-		
-		Map<String,Object> mapaParam = new HashMap<>() ;
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("select p from Produto p where 1 = 1 ");
-		
-		if( dataini != null ) {
-			sql.append(" and p.datainicio >= :dtini " );
-			mapaParam.put("dtini", dataini );
-		}
-		
-		if( datafim != null ) {
-			sql.append(" and p.datafim < :dtfim " );
-			mapaParam.put("dtfim", datafim );
-		}
-		
-		if( !(filtro == null || filtro.equals("")) ) {
-			sql.append(" and ( p.descricao like :filtro ") 
-				.append( "    or p.categoria.descricao like :filtro )" );
-	    	mapaParam.put("filtro", "%"+filtro+"%" );
-	    		
-		}
-		
-		sql.append(" order by p.id desc ");						
-		
-		return carregaRegistros(sql.toString(), mapaParam);
-		
-	}
 	
-	public List<Produto> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
-		
-		Map<String,Object> mapaParam = new HashMap<>() ;
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("select p from Produto p where 1 = 1 ");
-		/*
-		if( filtro.getDataini() != null ) {
-			sql.append(" and p.datainicio >= :dtini " );
-			mapaParam.put("dtini", filtro.getDataini() );
-		}
-		
-		if( filtro.getDatafim() != null ) {
-			sql.append(" and p.datafim < :dtfim " );
-			mapaParam.put("dtfim", filtro.getDatafim() );
-		}
-		*/
-		if( !(filtro.getFiltro() == null || filtro.getFiltro().equals("")) ) {
-			sql.append(" and ( p.descricao like :filtro ") 
-				.append( "    or p.categoria.descricao like :filtro )" );
-	    	mapaParam.put("filtro", "%"+filtro.getFiltro().toUpperCase().trim()+"%" );
-		}
-		
-		sql.append(" order by p.id desc ");						
-		
-		return carregaPagina(sql.toString(), mapaParam, pagina, tamanhopagina);
-		
-	}
-
 	public List<Produto> buscaAutoComplete(String filtro) {
 		
 		Map<String,Object> mapaParam = new HashMap<>() ;
@@ -120,18 +62,9 @@ public class ProdutoServico extends ServicoGenerico<Produto, Long> implements Se
 		
 	}
 	
-    public List<Produto> listProdutos() {
-        return buscaTodos();
-    }
-    
-    public Produto findById(Long id) {
-        return this.buscaPorId(id, false);
-    }
-    
     public void valoresIniciais(Produto produto) {
     	produto.setDatainicio( Calendar.getInstance() );
     };
-
 
     @Transactional
     public void salvar(Produto produto) {

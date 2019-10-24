@@ -21,8 +21,8 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.jfr.simples.model.bean.FiltroPadrao;
-import br.jfr.simples.model.bean.IFiltroPadrao;
+import br.jfr.simples.filtro.FiltroPadrao;
+import br.jfr.simples.filtro.IFiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.util.InternalServiceError;
 import br.jfr.simples.util.Utils;
@@ -173,7 +173,7 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 	}
 	
     public List<T> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
-    	throw new IllegalStateException("carregaPagina não implementado");
+		return carregaPagina(filtro.getQueryString(), pagina, tamanhopagina);
     }
 		
 	public List<T> carregaPagina(String sql, Map<String, Object> mapaParam, int pagina , int tamanhopagina ) {
@@ -195,5 +195,19 @@ public abstract class ServicoGenerico<T extends IEntidade, ID extends Serializab
 				return null ;
 			}
 	}
+	
+	public List<T> carregaPagina(String sql, int pagina , int tamanhopagina ) {
+		logger.info(" carregaPagina -> "+sql);
+		EntityManager em = this.getEntityManager();
+		Query query = em.createQuery(sql); 
+		try {
+			return (List<T>) query
+								.setFirstResult(pagina)
+								.setMaxResults(tamanhopagina)
+								.getResultList();
+		} catch (javax.persistence.NoResultException e) {
+			return null ;
+		}
+}
 
 }

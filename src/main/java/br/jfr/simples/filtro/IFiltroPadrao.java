@@ -1,4 +1,4 @@
-package br.jfr.simples.model.bean;
+package br.jfr.simples.filtro;
 
 
 import br.jfr.simples.model.db.IEntidade;

@@ -15,8 +15,8 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 
 import br.jfr.simples.util.InternalServiceError;
-import br.jfr.simples.model.bean.FiltroPadrao;
-import br.jfr.simples.model.bean.IFiltroPadrao;
+import br.jfr.simples.filtro.FiltroPadrao;
+import br.jfr.simples.filtro.IFiltroPadrao;
 import br.jfr.simples.model.db.Categoria;
 import br.jfr.simples.model.db.Usuario;
 
@@ -44,18 +44,7 @@ public class CategoriaServico extends ServicoGenerico<Categoria, Long> implement
 	
 	public List<Categoria> carregaPagina(IFiltroPadrao filtro, int pagina , int tamanhopagina) {
 		
-		Map<String,Object> mapaParam = new HashMap<>() ;
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("select c from Categoria c where 1 = 1 ");
-		
-		if( filtro != null && filtro.getFiltro() != null && ! filtro.getFiltro().isEmpty() ) {
-			sql.append(" and ( c.descricao like :filtro ) ") ; 
-	    	mapaParam.put("filtro", "%" + filtro.getFiltro().toUpperCase().trim() + "%" );
-		}
-		sql.append(" order by c.id desc ");						
-		
-		return carregaPagina(sql.toString(), mapaParam, pagina, tamanhopagina);
+		return carregaPagina(filtro.getQueryString(), pagina, tamanhopagina);
 		
 	}
     

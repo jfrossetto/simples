@@ -1,14 +1,14 @@
-package br.jfr.simples.model.bean;
+package br.jfr.simples.filtro;
 
 import java.io.Serializable;
 
 import br.jfr.simples.model.db.IEntidade;
 
-public class FiltroPadrao<T extends IEntidade> implements IFiltroPadrao<T>, Serializable {
+public abstract class FiltroPadrao<T extends IEntidade> implements IFiltroPadrao<T>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String filtro ;
+	protected String filtro ;
 	
 	public FiltroPadrao() {
 	}

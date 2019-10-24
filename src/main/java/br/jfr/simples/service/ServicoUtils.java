@@ -25,10 +25,4 @@ public abstract class ServicoUtils implements IServicoUtils {
 		return null;
 	}
 
-	public String formataDataDma(Calendar data) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		return sdf.format(data);
-	}
-
-
 }

@@ -7,8 +7,8 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import br.jfr.simples.model.bean.FiltroPadrao;
-import br.jfr.simples.model.bean.IFiltroPadrao;
+import br.jfr.simples.filtro.FiltroPadrao;
+import br.jfr.simples.filtro.IFiltroPadrao;
 import br.jfr.simples.model.db.IEntidade;
 import br.jfr.simples.service.ServicoGenerico;
 

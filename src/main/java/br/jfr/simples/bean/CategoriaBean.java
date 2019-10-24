@@ -1,39 +1,22 @@
 
 package br.jfr.simples.bean;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.component.UIViewRoot;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import javax.servlet.http.Part;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.UploadedFile;
 
 import br.jfr.simples.componente.ListaTabela;
-import br.jfr.simples.model.bean.FiltroPadrao;
+import br.jfr.simples.filtro.FiltroCategoria;
 import br.jfr.simples.model.bean.ModalAvisoConf;
 import br.jfr.simples.model.db.Categoria;
-import br.jfr.simples.model.db.Produto;
 import br.jfr.simples.service.CategoriaServico;
-import br.jfr.simples.service.ProdutoServico;
-import br.jfr.simples.service.ServicoGenerico;
-import br.jfr.simples.util.InternalServiceError;
-import br.jfr.simples.util.Utils;
-import javassist.expr.Instanceof;
 
 @Named
 @ViewScoped
@@ -46,7 +29,7 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
     @Inject 
     private CategoriaServico categoriaServico;
     
-    private FiltroPadrao categoriaFiltro = new FiltroPadrao<Categoria>();
+    private FiltroCategoria categoriaFiltro = new FiltroCategoria();
     
 	@PostConstruct
 	@Override
@@ -123,11 +106,11 @@ public class CategoriaBean extends CrudBean<Categoria, CategoriaServico> impleme
 		this.categoria = categoria;
 	}
 
-	public FiltroPadrao getCategoriaFiltro() {
+	public FiltroCategoria getCategoriaFiltro() {
 		return categoriaFiltro;
 	}
 
-	public void setCategoriaFiltro(FiltroPadrao categoriaFiltro) {
+	public void setCategoriaFiltro(FiltroCategoria categoriaFiltro) {
 		this.categoriaFiltro = categoriaFiltro;
 	}
 
