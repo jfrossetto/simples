@@ -60,7 +60,7 @@
 												converter="simpleEntityConverter"
 												completeMethod="#{bean.carregaAutoComplete}" 
     	    		      						value="#{bean.produto.categoria}"
-    	    		      						var="cat" itemLabel="#{cat.id} #{cat.descricao} #{cat.desc_reduzida}" itemValue="#{cat}" forceSelection="true" >
+    	    		      						var="cat" itemLabel="#{bean.labelAutoComplete('descricao')}" itemValue="#{cat}" forceSelection="true" >
     	    	    	  			<f:attribute name="servicoautocomplete" value="categoriaServico" />
 								</p:autoComplete>
 								<div class="input-group-btn input-group-btn-ac">
@@ -73,7 +73,6 @@
 										<f:attribute name="titulo" value="Busca Categoria" />
 										<f:attribute name="campo" value="produto.categoria" />
 										<f:attribute name="urlmodal" value="/pdv/listaCategoria.xhtml" />
-																				
 									</p:commandLink>
 								</div>
 							</div>

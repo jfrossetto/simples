@@ -97,6 +97,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoServico> implements Se
 	public void selecionaObjPrincipal(SelectEvent event) {
 		if( objLista instanceof Produto ) {
 			produto = (Produto) objLista;
+			logger.info( " teste pegaOjetoCampo2: " + Utils.pegaObjetoCampo2(this, "produto.categoria.descricao") );
 			modoEdicao();
 		}
 	}

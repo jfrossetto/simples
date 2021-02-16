@@ -118,7 +118,7 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
 		}
 		Class classeServico = (Class<T>) parameterizedType.getActualTypeArguments()[1];
 		logger.info( "classe do servico: " + classeServico.getName() );
-		// procura por membros dssa classe
+		// procura por membros dessa classe
 		Field fieldServico = Utils.pegaCampoClasse(this.getClass() , classeServico ); 
 		if( fieldServico == null ) {
 			throw new InternalServiceError(" servico não declarado no bean ");
@@ -250,10 +250,17 @@ public abstract class CrudBean<T extends IEntidade, S extends ServicoGenerico> e
         logger.info(" carregaAutoComplete - servico: "+nomeServico);
         ServicoGenerico servicoAutoComplete = (ServicoGenerico) Utils.pegaObjetoCampo(this,nomeServico);
 		//List categoriaLista = categoriaServico.buscaPorFiltro(query);
-		List lista = servicoAutoComplete.buscaAutoComplete(query);
+		List lista = servicoAutoComplete.buscaAutoComplete(query.toUpperCase());
 		return lista;
 	}
-
+	
+	public String labelAutoComplete(String campos) {
+        AutoComplete autoComplete = (AutoComplete) UIViewRoot.getCurrentComponent(facesContext.getCurrentInstance());
+		Object lista = autoComplete.getItemValue() ;
+		return Utils.pegaObjetoCampo2(lista, campos).toString();
+		//return "";
+	}
+	
     public void abrirModalBusca(ActionEvent ev) {
     	classeModal = MODAL_BUSCA;
     	
